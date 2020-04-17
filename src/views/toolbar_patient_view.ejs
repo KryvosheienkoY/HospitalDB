@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+    <a class="navbar-brand" style="color:#ffcc04">Система обліку пацієнтів</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="nav navbar-nav">
+            <li class="nav-item <%= section === 'main' ? '' : 'active' %>">
+                <a class="nav-link" href="/">Головна<span
+                            class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item <%= section === 'our_departments' ? '' : 'active' %>">
+                <a class="nav-link" href="/our_departments">Наші відділення<span
+                            class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item <%= section === 'my_profile' ? '' : 'active' %>">
+                <a class="nav-link" href="/patient/my_profile">Мій профіль<span
+                            class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item <%= section === 'my_appointments' ? '' : 'active' %>">
+                <a class="nav-link" href="/patient/my_appointments">Мої прийоми<span
+                            class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item" id="loginAid">
+                <a class="nav-link trigger-btn" href="#Logout" data-toggle="modal"
+                   data-target="#modalLoginForm">Logout<span
+                            class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+

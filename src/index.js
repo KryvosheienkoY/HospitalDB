@@ -24,12 +24,12 @@ con.connect(function(err) {
 
 });
 app.get('/', (req, res) => {
-    res.render('main_view');
+    res.render('main_unlogged_view');
 });
 
 app.get('/our_departments', function (req, res) {
     con.query("SELECT * FROM `department`", function (err, result){
-    res.render('our_departments_view',{
+    res.render('our_departments_unlogged_view',{
             departmentsAr: result});
     });
 });
