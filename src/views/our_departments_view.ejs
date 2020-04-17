@@ -20,7 +20,7 @@
     <h1>Наші відділення</h1>
     <div id="content" style="text-align: left">
         <% for (var i in departmentsAr){ %>
-        <div style="margin: 20px">
+        <div style="margin: 20px" id="department<%=departmentsAr[i].Department_ID%>">
             <p><strong><%=departmentsAr[i].Department_Name%> відділення</strong></p>
             <p>Телефон: <%=departmentsAr[i].Department_PhoneN%></p>
             <p>Адреса: місто <%=departmentsAr[i].Department_City%>, вулиця <%=departmentsAr[i].Department_Street %>,<%=departmentsAr[i].Department_Building %></p>

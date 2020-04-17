@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.set('views', './src/views');
 app.use('/', express.static(__dirname + '/../public'));
@@ -27,28 +27,11 @@ app.get('/', (req, res) => {
     res.render('main_view');
 });
 
-
-function getAllDepartments() {
-    return [{ Department_ID:1,  Department_Name:"DD",  Department_PhoneN:"098",  Department_City:"etwet",  Department_Street:"DGGD",  Department_Building:"DSG",  Department_Index:"DGSG"},
-        { Department_ID:2,  Department_Name:"DdddD",  Department_PhoneN:"098321",  Department_City:"etddwet",  Department_Street:"DGGD",  Department_Building:"DSG",  Department_Index:"DGSG"}
-
-];
-
-}
-
 app.get('/our_departments', function (req, res) {
+    con.query("SELECT * FROM `department`", function (err, result){
     res.render('our_departments_view',{
-        departmentsAr: getAllDepartments()});
-
-});
-
-app.get('/doctorsOfDepartment/(:id)', function (req, res) {
-    // result - хочу получить всех врачей отделения с айди - id
-    let result=[{ Doctor_Surname :1,  Doctor_Firstname:"DD"},
-        { Doctor_Surname:2,  Doctor_Firstname:"DdddD"}];
-
-        response.json({"doctors": result});
-
+            departmentsAr: result});
+    });
 });
 
 app.post('/register',function (req, res) {
@@ -72,7 +55,8 @@ app.post('/register',function (req, res) {
         });
     });
 });
-console.log(getAllDepartments());
+
+
 app.post('/login', function (req, res) {
     let usern = req.body.username;
     var sql = "SELECT * FROM user WHERE Username=?";
@@ -86,18 +70,11 @@ app.post('/login', function (req, res) {
 
     });
 });
-app.get('/departments', function (req, res) {
-    const dep = req.body.depart;
-    con.query("SELECT * FROM `department`", function (err, result) {
-        res.json({"doctors": result});
-        console.log("response");
-    });
-
-});
 
 app.get('/doctorsOfDepartment/(:id)', function (req, res) {
     var sql = "Select * FROM `doctor` WHERE Department_ID =?)";
-    con.query(sql, id, function (err, result) {
+    let idParam = req.params.id;
+    con.query(sql, idParam, function (err, result) {
         res.json({"doctors": result});
     });
 });
