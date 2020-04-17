@@ -40,22 +40,24 @@
                 </button>
             </div>
             <div class="modal-body mx-3">
-                <div class="md-form mb-5">
-                    <label data-error="wrong" data-success="right" for="defaultForm-emailL">Email &nbsp</label>
-                    <i class="fas fa-envelope prefix grey-text"></i>
-                    <input type="email" id="defaultForm-emailL" class="form-control validate">
-                </div>
+                <form style="width: 100%;" action="/login" method="post">
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-emailL">Email &nbsp</label>
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <input required type="email" id="defaultForm-emailL" class="form-control validate">
+                    </div>
 
-                <div class="md-form mb-4">
-                    <label data-error="wrong" data-success="right" for="defaultForm-passL">Password &nbsp</label>
-                    <i class="fas fa-lock prefix grey-text"></i>
-                    <input type="password" id="defaultForm-passL" class="form-control validate">
-                </div>
-
+                    <div class="md-form mb-4">
+                        <label data-error="wrong" data-success="right" for="defaultForm-passL">Password &nbsp</label>
+                        <i class="fas fa-lock prefix grey-text"></i>
+                        <input required type="password" id="defaultForm-passL" class="form-control validate">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button class="btn btn-default">Login</button>
             </div>
+
         </div>
     </div>
 </div>
@@ -71,20 +73,94 @@
                 </button>
             </div>
             <div class="modal-body mx-3">
-                <div class="md-form mb-5">
-                    <label data-error="wrong" data-success="right" for="defaultForm-emailR">Email &nbsp</label>
-                    <i class="fas fa-envelope prefix grey-text"></i>
-                    <input type="email" id="defaultForm-emailR" class="form-control validate">
+                <form style="width: 100%;" action="/register" method="post">
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-surnameR">Прізвище &nbsp</label>
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <input required type="text" id="defaultForm-surnameR" class="form-control validate">
+                    </div>
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-nameR">Ім'я &nbsp</label>
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <input required type="text" id="defaultForm-nameR" class="form-control validate">
+                    </div>
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-patronymicR">По-батькові
+                            &nbsp</label>
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <input required type="text" id="defaultForm-patronymicR" class="form-control validate">
+                    </div>
 
-                </div>
 
-                <div class="md-form mb-4">
-                    <label data-error="wrong" data-success="right" for="defaultForm-passR">Password &nbsp</label>
-                    <i class="fas fa-lock prefix grey-text"></i>
-                    <input type="password" id="defaultForm-passR" class="form-control validate">
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-cityR">Місто &nbsp</label>
+                        <i class="fas fa-city prefix grey-text"></i>
+                        <input required type="text" id="defaultForm-cityR" class="form-control validate">
+                    </div>
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-streetR">Вулиця &nbsp</label>
+                        <i class="fas fa-road  prefix grey-text"></i>
+                        <input required type="text" id="defaultForm-streetR" class="form-control validate">
+                    </div>
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-buildingR">Будинок &nbsp</label>
+                        <i class="fas fa-building prefix grey-text"></i>
+                        <input required type="text" id="defaultForm-buildingR" class="form-control validate">
+                    </div>
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-appartmentsR">Квартира
+                            &nbsp</label>
+                        <i class="fas fa-building prefix grey-text"></i>
+                        <input required type="text" id="defaultForm-appartmentsR" class="form-control validate">
+                    </div>
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-zipR">Поштовий індекс
+                            &nbsp</label>
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <input required type="text" id="defaultForm-zipR" class="form-control validate">
+                    </div>
 
-                </div>
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-bloodtypeR">Тип крові
+                            &nbsp</label>
+                        <i class="fas fa-tint prefix grey-text"></i>
+                        <input required type="text" id="defaultForm-bloodtypeR" class="form-control validate">
+                    </div>
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-rhesusR">Резус крові
+                            &nbsp</label>
+                        <i class="fas fa-tint prefix grey-text"></i>
+                        <input required type="text" id="defaultForm-rhesusR" class="form-control validate">
+                    </div>
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-phoneR">Номер телефону
+                            &nbsp</label>
+                        <i class="fas fa-phone prefix grey-text"></i>
+                        <input required type="text" id="defaultForm-phoneR" class="form-control validate">
+                    </div>
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-birthR">Дата народження &nbsp</label>
+                        <i class="fas fa-birthday-cake prefix grey-text"></i>
+                        <input required type="date" id="defaultForm-birthR" class="form-control validate">
+                    </div>
 
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-emailR">Email &nbsp</label>
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <input required type="email" id="defaultForm-emailR" class="form-control validate">
+                    </div>
+
+                    <div class="md-form mb-4">
+                        <label data-error="wrong" data-success="right" for="defaultForm-passR">Password &nbsp</label>
+                        <i class="fas fa-lock prefix grey-text"></i>
+                        <input required type="password" id="defaultForm-passR" class="form-control validate">
+                    </div>
+
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="defaultForm-notes">Коментарі &nbsp</label>
+                        <input  type="text" id="defaultForm-notesR" class="form-control validate">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button class="btn btn-default">Register</button>
