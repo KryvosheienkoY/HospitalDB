@@ -3,21 +3,24 @@ function addDoctorToDepartment(department_ID, name, department_Head, phone, emai
     console.log("photo-");
     console.log(photo);
 
-    let bytes = new Uint8Array(photo.data.length / 2);
-    for (var i = 0; i < photo.data.length; i += 2) {
-        bytes[i / 2] = parseInt(photo.data.join('').substring(i, i + 2), /* base = */ 16);
-    }
-// Make a Blob from the bytes
-    let blob = new Blob([bytes], {type: 'image/bmp'});
+//     let bytes = new Uint8Array(photo.data.length / 2);
+//     for (var i = 0; i < photo.data.length; i += 2) {
+//         bytes[i / 2] = parseInt(photo.data.join('').substring(i, i + 2), /* base = */ 16);
+//     }
+// // Make a Blob from the bytes
+//     let blob = new Blob([bytes], {type: 'image/bmp'});
+//
+// // Use createObjectURL to make a URL for the blob
+//     let image = new Image();
+//     image.src = URL.createObjectURL(blob);
+    // $(containerDoctorId).append(image);
 
-// Use createObjectURL to make a URL for the blob
-    let image = new Image();
-    image.src = URL.createObjectURL(blob);
-    $(containerDoctorId).append(image);
     if (department_Head)
         $(containerDoctorId).append($(`<p><strong>Завідуючий відділом</strong></p>`));
     $(containerDoctorId).append($(`<p><strong>${name}</strong></p><p>${phone}</p><p>${email}</p>
-                                                             <p>${specialization}</p><p>${scientific_Degree}</p>`));
+                                                             <p>${specialization}</p>`));
+    if(scientific_Degree!==null)
+        $(containerDoctorId).append($(`<p>${scientific_Degree}</p>`));
 
 }
 

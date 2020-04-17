@@ -35,6 +35,7 @@ app.get('/our_departments', function (req, res) {
     });
 });
 
+
 app.post('/register',function (req, res) {
     const user = req.body.username;
     const pass = req.body.pass;
@@ -69,8 +70,6 @@ app.get('/doctorsOfDepartment/(:id)', function (req, res) {
     var sql = "Select * FROM `doctor` WHERE Department_ID =?";
     let idParam = req.params.id;
     con.query(sql, idParam, function (err, result) {
-        console.log("doctors of department - ");
-        console.log(result);
         res.json({"doctors": result});
     });
 });
@@ -82,4 +81,40 @@ app.get('/delete/(:table)/(:id)', function (req, res) {
     });
 });
 
+app.post('/register',function (req, res) {
+    const user = req.body.username;
+    const pass = req.body.pass;
+    con.query('INSERT INTO user SET ?',
+        {Patient_Surname: req.body.defaultForm-surnameR, Patient_Firstname: req.body.defaultForm-nameR,Patient_Patronymic: req.body.defaultForm-patronymicR,
+            Patient_City: req.body.defaultForm-cityR,Patient_Street: req.body.defaultForm-streetR, Patient_Building: req.body.defaultForm-buildingR,
+            Patient_Apt: req.body.defaultForm-appartmentsR, Patient_Index: req.body.defaultForm-zipR,
+            Patient_PhoneN: req.body.defaultForm-phoneR, Patient_BloodType: req.body.defaultForm-bloodtypeR,
+            Patient_Rhesus: req.body.defaultForm-rhesusR, Patient_eAddress: req.body.defaultForm-emailR,Patient_Birthdate: req.body.defaultForm-birthR, Patient_Notes: NULL}, function(err, result){
+            if(err)
+            {
+                console.log(err);
+            }
+            else
+            {
+                bcrypt.genSalt(saltRounds, function (err, salt) {
+                    bcrypt.hash(pass, salt, function (err, hash) {
+                        con.query('INSERT INTO user SET ?', {Username: user, Password: hash,Patient_ID: res.insertId}, function(err, result){
+                            if(err)
+                            {
+                                console.log(err);
+                            }
+                        });
+                    });
+                });
+            }
+        });
+});
 
+// profile of patient with info
+
+app.get('/patient/my_profile', function (req, res) {
+    con.query("SELECT * FROM `patient`", function (err, result){
+        res.render('patient_myprofile_view',{
+            patientInfo: result});
+    });
+});

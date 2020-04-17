@@ -1,21 +1,38 @@
 <html>
-<head>
-    <title>Hospital</title>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
-    <link rel="stylesheet" src="/styles/stylesheets.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.3.0/css/all.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
-</head>
-
+<%- include('head'); %>
+<script src="extensions/editable/bootstrap-table-editable.js"></script>
 <body>
 <%- include('toolbar_patient_view', {section: 'main'}); %>
-<%- include('main_view'); %>
+
+<div style="margin: 20px" >
+    <table id="my_table_id"
+           data-url="data/url.json"
+           data-id-field="id"
+           data-editable-emptytext="Default empty text."
+           data-editable-url="/my/editable/update/path">
+        <thead>
+        <tr>
+            <th class="col-md-1" data-field="id" data-sortable="true" data-align="center">Name</th>
+            <th class="col-md-4" data-field="name" data-editable="true">Description</th>
+            <!--<th class="col-md-7" data-field="description" data-editable="true" data-editable-emptytext="Custom empty text.">Description</th>-->
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Прізвище</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Ім'я</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+
+
+</div>
 </body>
 </html>
