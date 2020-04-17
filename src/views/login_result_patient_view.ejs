@@ -1,0 +1,26 @@
+<html>
+
+<%- include('head'); %>
+<body>
+
+
+<%- include('toolbar_patient_view', {section: 'main'}); %>
+
+<div style="text-align: center; width: 100%; height: 100%">
+    <p style="color:green; margin-top: 20%; font-size: xx-large"><strong><%= result %>!</strong></p>
+</div>
+<span type="text" id="getID" style="display: none" value="<%= token %>"></span>
+<script>
+    // let fs = require('fs');
+    // let t = $('#getID').val();
+    // console.log("pushing json..");
+    // console.log("newData..");
+    // fs.writeFileSync("token.json", {'token': t}, function (err) {
+    //     if (err) throw err;
+    //     console.log('The "data to append" was appended to file!');
+    //
+    // });
+</script>
+
+</body>
+</html>
