@@ -11,21 +11,17 @@ app.get('/', (req, res) => {
 });
 
 
+function getAllDepartments() {
+    return [{ Department_ID:1,  Department_Name:"DD",  Department_PhoneN:"098",  Department_City:"etwet",  Department_Street:"DGGD",  Department_Building:"DSG",  Department_Index:"DGSG"},
+        { Department_ID:2,  Department_Name:"DdddD",  Department_PhoneN:"098321",  Department_City:"etddwet",  Department_Street:"DGGD",  Department_Building:"DSG",  Department_Index:"DGSG"}
+
+];
+
+}
+
 app.get('/our_departments', function (req, res) {
-    res.render('our_departments_view');
-    // const dep = req.department;
-    // if (dep == "all") {
-    //     con.query("SELECT * FROM doctor", function (err, result) {
-    //         response.json({"doctors": result});
-    //         console.log("response");
-    //     });
-    // }
-    // else {
-    //     var sql = "Select * FROM doctor WHERE Department_ID IN (SELECT Department_ID from department WHERE Department_Name=?)";
-    //     con.query(sql, [dep], function (err, result) {
-    //         response.json({"doctors": result});
-    //         console.log("response");
-    //     });
-    // }
+    res.render('our_departments_view',{
+        departmentsAr: getAllDepartments()});
+
 });
 
