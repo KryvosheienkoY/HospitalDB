@@ -10,5 +10,8 @@ app.get('/', (req, res) => {
     res.render('main_view');
 });
 
+app.get('/our_departments', (req, res) => {
+    res.render('our_departments_view');
+});
 
 
