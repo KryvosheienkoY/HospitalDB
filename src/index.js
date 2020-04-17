@@ -23,6 +23,7 @@ con.connect(function(err) {
     console.log("Connected!");
 
 });
+
 app.get('/', (req, res) => {
     res.render('main_unlogged_view');
 });
@@ -39,18 +40,11 @@ app.post('/register',function (req, res) {
     const pass = req.body.pass;
     bcrypt.genSalt(saltRounds, function (err, salt) {
         bcrypt.hash(pass, salt, function (err, hash) {
-            var sql = "INSERT INTO User Values(?,?)";
-            con.query(sql, [user, hash], function (err, result) {
+            con.query('INSERT INTO user SET ?', {Username: user, Password: hash}, function(err, result){
                 if(err)
                 {
-                    res.json({"res":"fail"});
+                    console.log(err);
                 }
-
-                if(res)
-                {
-                    res.json({"res":"success"})
-                }
-
             });
         });
     });
@@ -72,10 +66,18 @@ app.post('/login', function (req, res) {
 });
 
 app.get('/doctorsOfDepartment/(:id)', function (req, res) {
-    var sql = "Select * FROM `doctor` WHERE Department_ID =?)";
+    var sql = "Select * FROM `doctor` WHERE Department_ID =?";
     let idParam = req.params.id;
     con.query(sql, idParam, function (err, result) {
         res.json({"doctors": result});
     });
 });
+
+app.get('/delete/(:table)/(:id)', function (req, res) {
+    var sql = "Select * FROM ? WHERE Department_ID =?)";
+    con.query(sql, [req.param.table, req.param.id], function (err, result) {
+        res.json({"doctors": result});
+    });
+});
+
 
