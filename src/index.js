@@ -118,19 +118,27 @@ app.get('/delete/(:table)/(:id)', function (req, res) {
         res.json({"doctors": result});
     });
 });
-
 app.post('/register',function (req, res) {
-    const user = req.body.username;
-    const pass = req.body.pass;
+    const user = req.body.defaultForm-usernameR;
+    const pass = req.body.defaultForm-passR;
+    var sql = "SELECT * FROM user WHERE Username=?";
+    con.query(sql, user, function (err, result) {
+        if(res.length>0)
+        {
+            res.json({"result":"Failed. User exists"});
+            return;
+        }
+
+    });
     con.query('INSERT INTO user SET ?',
         {Patient_Surname: req.body.defaultForm-surnameR, Patient_Firstname: req.body.defaultForm-nameR,Patient_Patronymic: req.body.defaultForm-patronymicR,
             Patient_City: req.body.defaultForm-cityR,Patient_Street: req.body.defaultForm-streetR, Patient_Building: req.body.defaultForm-buildingR,
             Patient_Apt: req.body.defaultForm-appartmentsR, Patient_Index: req.body.defaultForm-zipR,
             Patient_PhoneN: req.body.defaultForm-phoneR, Patient_BloodType: req.body.defaultForm-bloodtypeR,
-            Patient_Rhesus: req.body.defaultForm-rhesusR, Patient_eAddress: req.body.defaultForm-emailR,Patient_Birthdate: req.body.defaultForm-birthR, Patient_Notes: NULL}, function(err, result){
+            Patient_Rhesus: req.body.defaultForm-rhesusR, Patient_eAddress: req.body.defaultForm-emailR,Patient_Birthdate: req.body.defaultForm-birthR, Patient_Notes: req.body.defaultForm-notes}, function(err, result){
             if(err)
             {
-                console.log(err);
+                res.json({"result":"Failed. User exists"+err});
             }
             else
             {
@@ -141,6 +149,14 @@ app.post('/register',function (req, res) {
                             {
                                 console.log(err);
                             }
+                            else
+                            {
+                                role=3;
+                                let user = {name: req.body.defaultForm-usernameR};
+                                const token = jwt.sign(user, Secret);
+                                res.json({"result": "success","token": token});
+                            }
+
                         });
                     });
                 });
