@@ -10,6 +10,10 @@
   },
   "author": "Kryvosheienko&Meronyk",
   "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pug": "^2.0.4"
+  },
   "devDependencies": {
     "nodemon": "^2.0.2"
   }
