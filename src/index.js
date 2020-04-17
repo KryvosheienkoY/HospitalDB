@@ -11,4 +11,26 @@ app.get('/', (req, res) => {
 });
 
 
+function getAllDepartments() {
+    return [{ Department_ID:1,  Department_Name:"DD",  Department_PhoneN:"098",  Department_City:"etwet",  Department_Street:"DGGD",  Department_Building:"DSG",  Department_Index:"DGSG"},
+        { Department_ID:2,  Department_Name:"DdddD",  Department_PhoneN:"098321",  Department_City:"etddwet",  Department_Street:"DGGD",  Department_Building:"DSG",  Department_Index:"DGSG"}
+
+];
+
+}
+
+app.get('/our_departments', function (req, res) {
+    res.render('our_departments_view',{
+        departmentsAr: getAllDepartments()});
+
+});
+
+app.get('/doctorsOfDepartment/(:id)', function (req, res) {
+    // result - хочу получить всех врачей отделения с айди - id
+    let result=[{ Doctor_Surname :1,  Doctor_Firstname:"DD"},
+        { Doctor_Surname:2,  Doctor_Firstname:"DdddD"}];
+
+        response.json({"doctors": result});
+
+});
 
