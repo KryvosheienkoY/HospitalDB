@@ -17,18 +17,19 @@
 <body>
 <%- include('toolbar_unlogged_view', {section: 'our_departments'}); %>
 <div class="text-center" id="main" style="display:inline-block;margin:20px;width:95%;">
-    <h1>our_departments</h1>
-    <p>our_departments ____</p>
-    <div id="content">
+    <h1>Наші відділення</h1>
+    <div id="content" style="text-align: left">
         <% for (var i in departmentsAr){ %>
-        <div id="department"+<%=departmentsAr[i].Department_ID%>>
-            <p><%=departmentsAr[i].Department_Name%></p>
+        <div style="margin: 20px">
+            <p><strong><%=departmentsAr[i].Department_Name%> відділення</strong></p>
             <p>Телефон: <%=departmentsAr[i].Department_PhoneN%></p>
-            <p>Місто: <%=departmentsAr[i].Department_City%></p>
+            <p>Адреса: місто <%=departmentsAr[i].Department_City%>, вулиця <%=departmentsAr[i].Department_Street %>,<%=departmentsAr[i].Department_Building %></p>
+            <p>Поштовий індекс: місто <%=departmentsAr[i].Department_Index%></p>
+            <button id="btnDepartment<%=departmentsAr[i].Department_ID%>" class="btn  btn-sm btn-primary" onclick="getDoctorsofDepartment(this.id)">Наші лікарі</button>
         </div>
         <% } %>
     </div>
 </div>
-
+<script src="js/our_departments.js"></script>
 </body>
 </html>

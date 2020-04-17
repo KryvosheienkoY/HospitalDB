@@ -25,3 +25,12 @@ app.get('/our_departments', function (req, res) {
 
 });
 
+app.get('/doctorsOfDepartment/(:id)', function (req, res) {
+    // result - хочу получить всех врачей отделения с айди - id
+    let result=[{ Doctor_Surname :1,  Doctor_Firstname:"DD"},
+        { Doctor_Surname:2,  Doctor_Firstname:"DdddD"}];
+
+        response.json({"doctors": result});
+
+});
+
