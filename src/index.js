@@ -72,9 +72,11 @@ app.post('/login', function (req, res) {
 });
 
 app.get('/doctorsOfDepartment/(:id)', function (req, res) {
-    var sql = "Select * FROM `doctor` WHERE Department_ID =?)";
+    var sql = "Select * FROM `doctor` WHERE Department_ID =?";
     let idParam = req.params.id;
     con.query(sql, idParam, function (err, result) {
+        console.log("doctors of department - ");
+        console.log(result);
         res.json({"doctors": result});
     });
 });

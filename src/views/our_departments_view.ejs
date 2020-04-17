@@ -8,6 +8,7 @@
             <p>Адреса: місто <%=departmentsAr[i].Department_City%>, вулиця <%=departmentsAr[i].Department_Street %>,<%=departmentsAr[i].Department_Building %></p>
             <p>Поштовий індекс: місто <%=departmentsAr[i].Department_Index%></p>
             <button id="btnDepartment<%=departmentsAr[i].Department_ID%>" class="btn  btn-sm btn-primary" onclick="getDoctorsofDepartment(this.id)">Наші лікарі</button>
+            <div id="containerDoctor<%=departmentsAr[i].Department_ID%>" style="padding: 10px; margin-left: 20px"></div>
         </div>
         <% } %>
     </div>
