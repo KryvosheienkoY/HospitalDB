@@ -33,31 +33,31 @@
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body mx-3">
-                <form style="width: 100%;" action="/login" method="post">
+            <form style="width: 100%;" action="/login" method="post">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-emailL">Email &nbsp</label>
+                        <label data-error="wrong" data-success="right" for="defaultForm_emailL">Email &nbsp</label>
                         <i class="fas fa-envelope prefix grey-text"></i>
-                        <input required type="email" id="defaultForm-emailL" class="form-control validate">
+                        <input name="email" required type="email" id="defaultForm_emailL" class="form-control validate">
                     </div>
 
                     <div class="md-form mb-4">
-                        <label data-error="wrong" data-success="right" for="defaultForm-passL">Password &nbsp</label>
+                        <label data-error="wrong" data-success="right" for="defaultForm_passL">Password &nbsp</label>
                         <i class="fas fa-lock prefix grey-text"></i>
-                        <input required type="password" id="defaultForm-passL" class="form-control validate">
+                        <input required  name="password" type="password" id="defaultForm_passL" class="form-control validate">
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <button class="btn btn-default">Login</button>
-            </div>
 
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-default" type="submit">Login</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -66,111 +66,115 @@
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Register</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body mx-3">
-                <form style="width: 100%;" action="/register" method="post">
+            <form style="width: 100%;" action="/register" method="post">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Register</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-surnameR">Прізвище &nbsp</label>
+                        <label data-error="wrong" data-success="right" for="defaultForm_surnameR">Прізвище &nbsp</label>
                         <i class="fas fa-user prefix grey-text"></i>
-                        <input required type="text" id="defaultForm-surnameR" class="form-control validate">
+                        <input required name="defaultForm_surnameR" type="text" id="defaultForm_surnameR" class="form-control validate">
                     </div>
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-nameR">Ім'я &nbsp</label>
+                        <label data-error="wrong" data-success="right" for="defaultForm_nameR">Ім'я &nbsp</label>
                         <i class="fas fa-user prefix grey-text"></i>
-                        <input required type="text" id="defaultForm-nameR" class="form-control validate">
+                        <input required name="defaultForm_nameR" type="text" id="defaultForm_nameR" class="form-control validate">
                     </div>
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-patronymicR">По-батькові
+                        <label data-error="wrong" data-success="right" for="defaultForm_patronymicR">По-батькові
                             &nbsp</label>
                         <i class="fas fa-user prefix grey-text"></i>
-                        <input required type="text" id="defaultForm-patronymicR" class="form-control validate">
+                        <input required name="defaultForm_patronymicR" type="text" id="defaultForm_patronymicR" class="form-control validate">
                     </div>
 
 
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-cityR">Місто &nbsp</label>
+                        <label data-error="wrong" data-success="right" for="defaultForm_cityR">Місто &nbsp</label>
                         <i class="fas fa-city prefix grey-text"></i>
-                        <input required type="text" id="defaultForm-cityR" class="form-control validate">
+                        <input required name="defaultForm_cityR" type="text" id="defaultForm_cityR" class="form-control validate">
                     </div>
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-streetR">Вулиця &nbsp</label>
+                        <label data-error="wrong" data-success="right" for="defaultForm_streetR">Вулиця &nbsp</label>
                         <i class="fas fa-road  prefix grey-text"></i>
-                        <input required type="text" id="defaultForm-streetR" class="form-control validate">
+                        <input required name="defaultForm_streetR" type="text" id="defaultForm_streetR" class="form-control validate">
                     </div>
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-buildingR">Будинок &nbsp</label>
+                        <label data-error="wrong" data-success="right" for="defaultForm_buildingR">Будинок &nbsp</label>
                         <i class="fas fa-building prefix grey-text"></i>
-                        <input required type="text" id="defaultForm-buildingR" class="form-control validate">
+                        <input required name="defaultForm_buildingR" type="text" id="defaultForm_buildingR" class="form-control validate">
                     </div>
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-appartmentsR">Квартира
+                        <label data-error="wrong" data-success="right" for="defaultForm_appartmentsR">Квартира
                             &nbsp</label>
                         <i class="fas fa-building prefix grey-text"></i>
-                        <input required type="text" id="defaultForm-appartmentsR" class="form-control validate">
+                        <input required name="defaultForm_appartmentsR" type="text" id="defaultForm_appartmentsR" class="form-control validate">
                     </div>
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-zipR">Поштовий індекс
+                        <label data-error="wrong" data-success="right" for="defaultForm_zipR">Поштовий індекс
                             &nbsp</label>
                         <i class="fas fa-envelope prefix grey-text"></i>
-                        <input required type="text" id="defaultForm-zipR" class="form-control validate">
+                        <input required name="defaultForm_zipR" type="text" id="defaultForm_zipR" class="form-control validate">
                     </div>
 
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-bloodtypeR">Тип крові
+                        <label data-error="wrong" data-success="right" for="defaultForm_bloodtypeR">Тип крові
                             &nbsp</label>
                         <i class="fas fa-tint prefix grey-text"></i>
-                        <input required type="text" id="defaultForm-bloodtypeR" class="form-control validate">
+                        <input required name="defaultForm_bloodtypeR" type="text" id="defaultForm_bloodtypeR" class="form-control validate">
                     </div>
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-rhesusR">Резус крові
+                        <label data-error="wrong" data-success="right" for="defaultForm_rhesusR">Резус крові
                             &nbsp</label>
                         <i class="fas fa-tint prefix grey-text"></i>
-                        <input required type="text" id="defaultForm-rhesusR" class="form-control validate">
+                        <input required name="defaultForm_rhesusR" type="text" id="defaultForm_rhesusR" class="form-control validate">
                     </div>
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-phoneR">Номер телефону
+                        <label data-error="wrong" data-success="right" for="defaultForm_phoneR">Номер телефону
                             &nbsp</label>
                         <i class="fas fa-phone prefix grey-text"></i>
-                        <input required type="text" id="defaultForm-phoneR" class="form-control validate">
+                        <input required name="defaultForm_phoneR" type="text" id="defaultForm_phoneR" class="form-control validate">
                     </div>
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-birthR">Дата народження &nbsp</label>
+                        <label data-error="wrong" data-success="right" for="defaultForm_birthR">Дата народження
+                            &nbsp</label>
                         <i class="fas fa-birthday-cake prefix grey-text"></i>
-                        <input required type="date" id="defaultForm-birthR" class="form-control validate">
+                        <input required name="defaultForm_birthR" type="date" id="defaultForm_birthR" class="form-control validate">
                     </div>
 
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-emailR">Email &nbsp</label>
+                        <label data-error="wrong" data-success="right" for="defaultForm_emailR">Email &nbsp</label>
                         <i class="fas fa-envelope prefix grey-text"></i>
-                        <input required type="email" id="defaultForm-emailR" class="form-control validate">
+                        <input required name="defaultForm_emailR" type="email" id="defaultForm_emailR" class="form-control validate">
                     </div>
 
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-usernameR">Login &nbsp</label>
+                        <label data-error="wrong" data-success="right" for="defaultForm_usernameR">Login &nbsp</label>
                         <i class="fas fa-user prefix grey-text"></i>
-                        <input required type="text" id="defaultForm-usernameR" class="form-control validate">
+                        <input required name="defaultForm_usernameR" type="text" id="defaultForm_usernameR" class="form-control validate">
                     </div>
 
                     <div class="md-form mb-4">
-                        <label data-error="wrong" data-success="right" for="defaultForm-passR">Password &nbsp</label>
+                        <label data-error="wrong" data-success="right" for="defaultForm_passR">Password &nbsp</label>
                         <i class="fas fa-lock prefix grey-text"></i>
-                        <input required type="password" id="defaultForm-passR" class="form-control validate">
+                        <input required name="defaultForm_passR" type="password" id="defaultForm_passR" class="form-control validate">
                     </div>
 
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="defaultForm-notes">Коментарі &nbsp</label>
-                        <input  type="text" id="defaultForm-notesR" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="defaultForm_notes">Коментарі &nbsp</label>
+                        <input type="text" name="defaultForm_notesR" id="defaultForm_notesR" class="form-control validate">
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <button class="btn btn-default">Register</button>
-            </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-default " type="submit">Register</button>
+                    <!--<button class="btn btn-default " type="submit" onclick=" $('#modalRegisterForm').modal('hide');onclick=" $('#modalRegisterForm').modal('hide');">Register</button>-->
+                </div>
+            </form>
         </div>
     </div>
 </div>

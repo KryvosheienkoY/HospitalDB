@@ -45,49 +45,52 @@ app.get('/our_departments', function (req, res) {
 
 
 app.post('/register',function (req, res) {
-    const user = req.body.defaultForm-usernameR;
-    const pass = req.body.defaultForm-passR;
+    console.log("try to reg");
+    console.log("req.body");
+    console.log(req.body);
+    const user = req.body.defaultForm_usernameR;
+    const pass = req.body.defaultForm_passR;
     var sql = "SELECT * FROM user WHERE Username=?";
     con.query(sql, user, function (err, result) {
-    if(res.length>0)
-    {
-        res.json({"result":"Failed. User exists"});
-        return;
-    }
+        if(res.length>0)
+        {
+            res.json({"result":"Failed. User exists"});
+            return;
+        }
 
     });
-    con.query('INSERT INTO user SET ?',
-        {Patient_Surname: req.body.defaultForm-surnameR, Patient_Firstname: req.body.defaultForm-nameR,Patient_Patronymic: req.body.defaultForm-patronymicR,
-            Patient_City: req.body.defaultForm-cityR,Patient_Street: req.body.defaultForm-streetR, Patient_Building: req.body.defaultForm-buildingR,
-            Patient_Apt: req.body.defaultForm-appartmentsR, Patient_Index: req.body.defaultForm-zipR,
-            Patient_PhoneN: req.body.defaultForm-phoneR, Patient_BloodType: req.body.defaultForm-bloodtypeR,
-            Patient_Rhesus: req.body.defaultForm-rhesusR, Patient_eAddress: req.body.defaultForm-emailR,Patient_Birthdate: req.body.defaultForm-birthR, Patient_Notes: req.body.defaultForm-notes}, function(err, result){
-        if(err)
-        {
-            res.json({"result":"Failed. User exists"+err});
-        }
-        else
-        {
-            bcrypt.genSalt(saltRounds, function (err, salt) {
-                bcrypt.hash(pass, salt, function (err, hash) {
-                    con.query('INSERT INTO user SET ?', {Username: user, Password: hash,Patient_ID: res.insertId}, function(err, result){
-                        if(err)
-                        {
-                            console.log(err);
-                        }
-                        else
-                        {
-                            role=3;
-                            let user = {name: req.body.username};
-                            const token = jwt.sign(user, Secret);
-                            res.json({"result": "success","token": token});
-                        }
+    con.query('INSERT INTO patient SET ?',
+        {Patient_Surname: req.body.defaultForm_surnameR, Patient_Firstname: req.body.defaultForm_nameR,Patient_Patronymic: req.body.defaultForm_patronymicR,
+            Patient_City: req.body.defaultForm_cityR,Patient_Street: req.body.defaultForm_streetR, Patient_Building: req.body.defaultForm_buildingR,
+            Patient_Apt: req.body.defaultForm_appartmentsR, Patient_Index: req.body.defaultForm_zipR,
+            Patient_PhoneN: req.body.defaultForm_phoneR, Patient_BloodType: req.body.defaultForm_bloodtypeR,
+            Patient_Rhesus: req.body.defaultForm_rhesusR, Patient_eAddress: req.body.defaultForm_emailR,Patient_Birthdate: req.body.defaultForm_birthR, Patient_Notes: req.body.defaultForm_notes}, function(err, result){
+            if(err)
+            {
+                res.json({"result":"Failed. User exists"+err});
+            }
+            else
+            {
+                bcrypt.genSalt(saltRounds, function (err, salt) {
+                    bcrypt.hash(pass, salt, function (err, hash) {
+                        con.query('INSERT INTO user SET ?', {Username: user, Password: hash,Patient_ID: res.insertId}, function(err, result){
+                            if(err)
+                            {
+                                console.log(err);
+                            }
+                            else
+                            {
+                                role=3;
+                                let user = {name: req.body.username};
+                                const token = jwt.sign(user, Secret);
+                                res.json({"result": "success","token": token});
+                            }
 
+                        });
                     });
                 });
-            });
-        }
-    });
+            }
+        });
 });
 
 app.post('/login', function (req, res) {
@@ -119,8 +122,8 @@ app.get('/delete/(:table)/(:id)', function (req, res) {
     });
 });
 app.post('/register',function (req, res) {
-    const user = req.body.defaultForm-usernameR;
-    const pass = req.body.defaultForm-passR;
+    const user = req.body.defaultForm_usernameR;
+    const pass = req.body.defaultForm_passR;
     var sql = "SELECT * FROM user WHERE Username=?";
     con.query(sql, user, function (err, result) {
         if(res.length>0)
@@ -131,11 +134,11 @@ app.post('/register',function (req, res) {
 
     });
     con.query('INSERT INTO user SET ?',
-        {Patient_Surname: req.body.defaultForm-surnameR, Patient_Firstname: req.body.defaultForm-nameR,Patient_Patronymic: req.body.defaultForm-patronymicR,
-            Patient_City: req.body.defaultForm-cityR,Patient_Street: req.body.defaultForm-streetR, Patient_Building: req.body.defaultForm-buildingR,
-            Patient_Apt: req.body.defaultForm-appartmentsR, Patient_Index: req.body.defaultForm-zipR,
-            Patient_PhoneN: req.body.defaultForm-phoneR, Patient_BloodType: req.body.defaultForm-bloodtypeR,
-            Patient_Rhesus: req.body.defaultForm-rhesusR, Patient_eAddress: req.body.defaultForm-emailR,Patient_Birthdate: req.body.defaultForm-birthR, Patient_Notes: req.body.defaultForm-notes}, function(err, result){
+        {Patient_Surname: req.body.defaultForm_surnameR, Patient_Firstname: req.body.defaultForm_nameR,Patient_Patronymic: req.body.defaultForm_patronymicR,
+            Patient_City: req.body.defaultForm_cityR,Patient_Street: req.body.defaultForm_streetR, Patient_Building: req.body.defaultForm_buildingR,
+            Patient_Apt: req.body.defaultForm_appartmentsR, Patient_Index: req.body.defaultForm_zipR,
+            Patient_PhoneN: req.body.defaultForm_phoneR, Patient_BloodType: req.body.defaultForm_bloodtypeR,
+            Patient_Rhesus: req.body.defaultForm_rhesusR, Patient_eAddress: req.body.defaultForm_emailR,Patient_Birthdate: req.body.defaultForm_birthR, Patient_Notes: req.body.defaultForm_notes}, function(err, result){
             if(err)
             {
                 res.json({"result":"Failed. User exists"+err});
@@ -152,7 +155,7 @@ app.post('/register',function (req, res) {
                             else
                             {
                                 role=3;
-                                let user = {name: req.body.defaultForm-usernameR};
+                                let user = {name: req.body.defaultForm_usernameR};
                                 const token = jwt.sign(user, Secret);
                                 res.json({"result": "success","token": token});
                             }
