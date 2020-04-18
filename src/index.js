@@ -54,9 +54,7 @@ app.post('/register',function (req, res) {
         {
             res.json({"result":"Failed. User exists"});
             return;
-        }
 
-    });
     con.query('INSERT INTO patient SET ?',
         {Patient_Surname: req.body.surnameR, Patient_Firstname: req.body.nameR,Patient_Patronymic: req.body.patronymicR,
             Patient_City: req.body.cityR,Patient_Street: req.body.streetR, Patient_Building: req.body.buildingR,
@@ -90,6 +88,9 @@ app.post('/register',function (req, res) {
                 });
             }
         });
+        }
+
+    });
 });
 
 app.post('/login', function (req, res) {
