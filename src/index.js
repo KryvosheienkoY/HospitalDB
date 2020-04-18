@@ -50,26 +50,26 @@ app.post('/register',function (req, res) {
     const pass = req.body.passR;
     var sql = "SELECT * FROM user WHERE Username=?";
     con.query(sql, user, function (err, result) {
-        if(res.length>0)
-        {
-            res.json({"result":"Failed. User exists"});
-            return;
+        if(result.length>0) {
+            result.json({"result": "Failed. User exists"});
 
+        }
+        else{
     con.query('INSERT INTO patient SET ?',
         {Patient_Surname: req.body.surnameR, Patient_Firstname: req.body.nameR,Patient_Patronymic: req.body.patronymicR,
             Patient_City: req.body.cityR,Patient_Street: req.body.streetR, Patient_Building: req.body.buildingR,
             Patient_Apt: req.body.appartmentsR, Patient_Index: req.body.zipR,
             Patient_PhoneN: req.body.phoneR, Patient_BloodType: req.body.bloodtypeR,
-            Patient_Rhesus: req.body.rhesusR, Patient_eAddress: req.body.emailR,Patient_Birthdate: req.body.birthR, Patient_Notes: req.body.notesR}, function(err, result){
+            Patient_Rhesus: req.body.rhesusR, Patient_eAddress: req.body.emailR,Patient_Birthdate: req.body.birthR, Patient_Notes: req.body.notesR}, function(err, resul){
             if(err)
             {
-                res.json({"result":"Failed. User exists"+err});
+                res.json({"result":"Failed. "+err});
             }
             else
             {
                 bcrypt.genSalt(saltRounds, function (err, salt) {
                     bcrypt.hash(pass, salt, function (err, hash) {
-                        con.query('INSERT INTO user SET ?', {Username: user, Password: hash,Patient_ID: res.insertId}, function(err, result){
+                        con.query('INSERT INTO user SET ?', {Username: user, Password: hash,Patient_ID: resul.insertId}, function(err, resu){
                             if(err)
                             {
                                 console.log(err);
@@ -77,7 +77,7 @@ app.post('/register',function (req, res) {
                             else
                             {
                                 role=3;
-                                let user = {name: req.body.username};
+                                let user = {id: resul.insertId};
                                 const token = jwt.sign(user, Secret);
                                 // res.json({"result": "success","token": token});
                                 res.render('login_result_patient_view', {"result": "success","token": token,"toolbar": "toolbar_patient_view"});
@@ -99,7 +99,7 @@ app.post('/login', function (req, res) {
     con.query(sql, usern, function (err, result) {
 
         bcrypt.compare(result, hash, function (err, result) {
-            let user = {name: req.body.username};
+            let user = {id: result.Patient_ID};
             const token = jwt.sign(user, Secret);
             res.json({"token": token});
         });
