@@ -1,10 +1,9 @@
 <html>
 <%- include('head'); %>
-<script src="extensions/editable/bootstrap-table-editable.js"></script>
 <body>
 <%- include('toolbar_patient_view', {section: 'main'}); %>
 
-<div style="margin: 20px" >
+<div style="margin: 20px">
     <table id="my_table_id"
            data-url="data/url.json"
            data-id-field="id"
@@ -18,19 +17,72 @@
         </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Прізвище</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Ім'я</td>
-                <td></td>
-            </tr>
+        <tr>
+            <td>Прізвище</td>
+            <td><%= p.Patient_Surname %></td>
+            <td><a href="edit/patient/<%= p.Patient_ID %>" class="btn btn-sm btn-primary">Edit</a></td>
+        </tr>
+        <tr>
+            <td>Ім'я</td>
+            <td><%= p.Patient_Firstname %></td>
+            <td><a href="edit/patient/<%= p.Patient_ID %>" class="btn btn-sm btn-primary">Edit</a></td>
+        </tr>
+        <tr>
+            <td>По-батькові</td>
+            <td><%= p.Patient_Patronymic %></td>
+            <td><a href="edit/patient/<%= p.Patient_ID %>" class="btn btn-sm btn-primary">Edit</a></td>
+        </tr>
+        <tr>
+            <td>Місто</td>
+            <td><%= p.Patient_City %></td>
+            <td><a href="edit/patient/<%= p.Patient_ID %>" class="btn btn-sm btn-primary">Edit</a></td>
+        </tr>
+        <tr>
+            <td>Вулиця</td>
+            <td><%= p.Patient_Street %></td>
+            <td><a href="edit/patient/<%= p.Patient_ID %>" class="btn btn-sm btn-primary">Edit</a></td>
+        </tr>
+        <tr>
+            <td>Будинок</td>
+            <td><%= p.Patient_Building %></td>
+            <td><a href="edit/patient/<%= p.Patient_ID %>" class="btn btn-sm btn-primary">Edit</a></td>
+        </tr>
+        <tr>
+            <td>Квартира</td>
+            <td><%= p.Patient_Apt %></td>
+            <td><a href="edit/patient/<%= p.Patient_ID %>" class="btn btn-sm btn-primary">Edit</a></td>
+        </tr>
+        <tr>
+            <td>Поштовий індекс</td>
+            <td><%= p.Patient_Apt %></td>
+            <td><a href="edit/patient/<%= p.Patient_ID %>" class="btn btn-sm btn-primary">Edit</a></td>
+        </tr>
+        <tr>
+            <td>Тип крові</td>
+            <td><%= p.Patient_BloodType %><%p.Patient_Rhesus%></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Номер телефону</td>
+            <td><%= p.Patient_PhoneN %></td>
+            <td><a href="edit/patient/<%= p.Patient_ID %>" class="btn btn-sm btn-primary">Edit</a></td>
+        </tr>
+        <tr>
+            <td>Дата народження</td>
+            <td><%= p.Patient_Birthdate %></td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>Email</td>
+            <td><%= p.Patient_eAddress %></td>
+            <td><a href="edit/patient/<%= p.Patient_ID %>" class="btn btn-sm btn-primary">Edit</a></td>
+        </tr>
+
+
+
         </tbody>
     </table>
-
-
-
 
 
 </div>

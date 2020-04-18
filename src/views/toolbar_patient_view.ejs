@@ -14,7 +14,7 @@
                             class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item <%= section === 'my_profile' ? '' : 'active' %>">
-                <a class="nav-link" href="/patient/my_profile">Мій профіль<span
+                <a class="nav-link" href="#" onclick="getMyProfileAjax()">Мій профіль<span
                             class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item <%= section === 'my_appointments' ? '' : 'active' %>">
@@ -33,5 +33,17 @@
     </div>
 </nav>
 
-
-
+<script>
+    function getMyProfileAjax() {
+        $.ajax({
+            type: 'GET',
+            data: {
+                "token": sessionStorage.getItem('token')
+            },
+            url: '/patient/my_profile/',
+            success: function (response) {
+                console.log("success of /patient/my_profile/");
+            }
+        });
+    }
+</script>
