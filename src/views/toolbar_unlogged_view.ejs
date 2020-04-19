@@ -6,20 +6,17 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="nav navbar-nav">
             <li class="nav-item <%= section === 'main' ? '' : 'active' %>">
-                <a class="nav-link" href="/">Головна<span
-                            class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Головна</a>
             </li>
             <li class="nav-item <%= section === 'our_departments' ? '' : 'active' %>">
-                <a class="nav-link" href="/our_departments">Наші відділення<span
-                            class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/our_departments">Наші відділення</a>
             </li>
         </ul>
 
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item" id="loginAid">
                 <a class="nav-link trigger-btn" href="#modalLoginForm" data-toggle="modal"
-                   data-target="#modalLoginForm">Login<span
-                            class="sr-only">(current)</span></a>
+                   data-target="#modalLoginForm">Login</a>
             </li>
             <li class="nav-item" id="registerAid">
                 <a class="nav-link trigger-btn" href="#modalRegisterForm" data-toggle="modal"
@@ -42,15 +39,15 @@
                 </div>
                 <div class="modal-body mx-3">
                     <div class="md-form mb-5">
-                        <label data-error="wrong" data-success="right" for="emailL">Email &nbsp</label>
-                        <i class="fas fa-envelope prefix grey-text"></i>
-                        <input name="email" required type="email" id="emailL" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="usernameL">Username &nbsp</label>
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <input name="usernameL" required type="text" id="usernameL" class="form-control validate">
                     </div>
 
                     <div class="md-form mb-4">
                         <label data-error="wrong" data-success="right" for="passL">Password &nbsp</label>
                         <i class="fas fa-lock prefix grey-text"></i>
-                        <input required  name="password" type="password" id="passL" class="form-control validate">
+                        <input required  name="passL" type="password" id="passL" class="form-control validate">
                     </div>
 
                 </div>

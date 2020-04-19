@@ -3,17 +3,11 @@
 <body>
 <%- include('toolbar_patient_view', {section: 'main'}); %>
 
-<div style="margin: 20px">
-    <table id="my_table_id"
-           data-url="data/url.json"
-           data-id-field="id"
-           data-editable-emptytext="Default empty text."
-           data-editable-url="/my/editable/update/path">
+<div style="margin: 25px">
+    <table class="table table-striped table-responsive-md btn-table" style="width: 70%; margin-left: 15%">
         <thead>
         <tr>
-            <th class="col-md-1" data-field="id" data-sortable="true" data-align="center">Name</th>
-            <th class="col-md-4" data-field="name" data-editable="true">Description</th>
-            <!--<th class="col-md-7" data-field="description" data-editable="true" data-editable-emptytext="Custom empty text.">Description</th>-->
+            <th colspan="3">Моя інформація</th>
         </tr>
         </thead>
         <tbody>
@@ -59,7 +53,9 @@
         </tr>
         <tr>
             <td>Тип крові</td>
-            <td><%= p.Patient_BloodType %><%p.Patient_Rhesus%></td>
+            <td><%= p.Patient_BloodType %>
+                <% p.Patient_Rhesus %>
+            </td>
             <td></td>
         </tr>
         <tr>
@@ -78,7 +74,6 @@
             <td><%= p.Patient_eAddress %></td>
             <td><a href="edit/patient/<%= p.Patient_ID %>" class="btn btn-sm btn-primary">Edit</a></td>
         </tr>
-
 
 
         </tbody>

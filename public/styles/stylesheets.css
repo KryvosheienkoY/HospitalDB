@@ -3,3 +3,12 @@
     overflow-x: hidden;
     overflow-y: hidden;
 }
+
+table td:last-child{
+    width:1%;
+    white-space:nowrap;
+    color: #ffcc04;
+}
+body{
+    background-color: green;
+}
