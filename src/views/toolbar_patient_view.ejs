@@ -37,7 +37,7 @@
             //     $(document).ready(function () {
             $.ajax({
                 type: 'GET',
-                headers: { Authorization: $`Bearer ${sessionStorage.getItem("token")}` },
+                headers: { Authorization:  sessionStorage.getItem("token") },
                 url: '/patient/my_profile/',
                 success: function (response) {
                     console.log("success of /patient/my_profile/");
