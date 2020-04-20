@@ -2,10 +2,11 @@ const express = require('express');
 const app = express();
 app.use(express.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
-// app.set('views', 'C:/Users/USER/WebstormProjects/HospitalDB/src/views');
 app.set('views', './src/views');
+// app.set('views', 'C:/Users/USER/WebstormProjects/HospitalDB/src/views');
 app.use('/', express.static(__dirname + '/../public'));
 app.use('/patient', express.static(__dirname + '/../public'));
+ // app.use('/patient/my_profile', express.static(__dirname + '/../public'));
 app.listen(8080);
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
@@ -105,9 +106,8 @@ app.post('/register', function (req, res) {
                             }
                             else {
                                 role = 3;
-                                let user = {role: 3, id: resu.insertId};
+                                let user = {id: resu.insertID};
                                 const token = jwt.sign(user, Secret);
-                                console.log("token  "+token);
                                 res.render('login_result_patient_view', {
                                     "result": "success",
                                     "token": token
@@ -122,48 +122,45 @@ app.post('/register', function (req, res) {
 });
 
 app.post('/login', function (req, res) {
-    // let usern = req.body.usernameL;
-    console.log("Trying to login");
+    let usern = req.body.usernameL;
     var sql = "SELECT * FROM user WHERE Username=?";
     con.query(sql, req.body.usernameL, function (err, result) {
-        if(err||result.length<1)
-        {
+        if (err || result.length < 1) {
             console.log("User not found");
             res.render('login_result_failed_view', {
                 "result": "Failed. User doesn`t exist"
             });
         }
         else {
-            bcrypt.compare( req.body.passL, result[0].Password,function (erro, resul) {
+            bcrypt.compare(req.body.passL, result[0].Password, function (erro, resul) {
                 console.log("Password check");
-                if(erro)
-                {
+                if (erro) {
                     console.log("Password doesnt match");
                     res.render('login_result_failed_view', {
                         "result": "Failed. Password doesn`t match"
                     });
                 }
-                    console.log("Password matches");
-                    if (result[0].Patient_ID == null && result[0].Doctor_ID == null) {
-                        let user = {role: 1};
-                        const token = jwt.sign(user, Secret, jwt.HS256);
-                        //TODO render admin view
-                    } else if (result[0].Patient_ID == null) {
-                        let user = {role : 2, id : result[0].Doctor_ID};
-                        const token = jwt.sign(user, Secret);
-                        //    TODO render doctor view
-                    } else {
-                        console.log("Patient login");
-                        const token = jwt.sign({role: 3,id:result[0].Patient_ID}, Secret);
+                console.log("Password matches");
+                if (result[0].Patient_ID == null && result[0].Doctor_ID == null) {
+                    let user = {role: 1};
+                    const token = jwt.sign(user, Secret, jwt.HS256);
+                    //TODO render admin view
+                } else if (result[0].Patient_ID == null) {
+                    let user = {role: 2, id: result[0].Doctor_ID};
+                    const token = jwt.sign(user, Secret);
+                    //    TODO render doctor view
+                } else {
+                    console.log("Patient login");
+                    const token = jwt.sign({role: 3, id: result[0].Patient_ID}, Secret);
 
-                       // console.log("token  "+role+",  "+id);
-                        res.render('login_result_patient_view', {
-                            "result": "success",
-                            "token": token
-                        });
-                    }
+                    // console.log("token  "+role+",  "+id);
+                    res.render('login_result_patient_view', {
+                        "result": "success",
+                        "token": token
+                    });
+                }
             });
-         }
+        }
 
     });
 });
@@ -184,25 +181,22 @@ app.get('/delete/(:table)/(:id)', function (req, res) {
     });
 });
 
-
 app.get("/patient/my_profile", function (req, res) {
     if (req.headers && req.headers.authorization) {
         var auth = req.headers.authorization;
-        // console.log("token  "+auth);
         let {role, id} = jwt.verify(auth, Secret);
         let sql = "SELECT * FROM patient WHERE Patient_ID=?";
         con.query(sql, id, function (err, result) {
+            if (err) console.log(err);
             console.log(result[0]);
             var sql = "SELECT * FROM analysis WHERE Patient_ID=?";
-            con.query(sql, id, function (err, resul) {
+            con.query(sql, id, function (er, resul) {
+                if (er) console.log(er);
                 res.render("patient_myprofile_view", {
                     "p": result[0],
-                    "analysis": resul
+                     "analysis": resul
                 });
             });
         });
     }
 });
-
-
-

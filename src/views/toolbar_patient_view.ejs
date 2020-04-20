@@ -12,7 +12,7 @@
                 <a class="nav-link" href="/patient/our_departments">Наші відділення</a>
             </li>
             <li class="nav-item <%= section === 'my_profile' ? '' : 'active' %>">
-                <a class="nav-link" href="/patient/my_profile/" id="myprofileID">Мій профіль</a>
+                <a class="nav-link" href="/patient/my_profile" id="myprofileID">Мій профіль</a>
             </li>
             <li class="nav-item <%= section === 'my_appointments' ? '' : 'active' %>">
                 <a class="nav-link" href="/patient/my_appointments">Мої прийоми</a>
@@ -30,17 +30,18 @@
 
 <script>
     $(document).ready(function () {
-        console.log("&&&&&&&&&token -" +sessionStorage.getItem('token'));
-        $('#myprofileID').click(function () {
-            console.log("token -" +sessionStorage.getItem('token'));
-            // function getMyProfileAjax() {
-            //     $(document).ready(function () {
+        console.log("&&&&&&&&&token -" + sessionStorage.getItem('token'));
+        $('#myprofileID').on('click', function (e) {
+            e.preventDefault();
+            console.log("token -" + sessionStorage.getItem('token'));
             $.ajax({
                 type: 'GET',
-                headers: { Authorization:  sessionStorage.getItem("token") },
-                url: '/patient/my_profile/',
+                headers: {Authorization: sessionStorage.getItem("token")},
+                url: '/patient/my_profile',
                 success: function (response) {
                     console.log("success of /patient/my_profile/");
+                    $("html").html(response);
+                    window.history.pushState({}, null, "localhost:8080/patient/my_profile");
                 }
             });
         });
