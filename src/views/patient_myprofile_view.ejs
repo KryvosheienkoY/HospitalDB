@@ -3,7 +3,7 @@
 <body>
 <%- include('toolbar_patient_view', {section: 'main'}); %>
 <div style="margin: 25px">
-    <table class="table table-striped table-responsive-md btn-table" style="width: 70%; margin-left: 15%">
+    <table class="table table-striped table-responsive-md btn-table" style="width: 60%; margin-left: 15%">
         <thead>
         <tr>
             <th colspan="3">Моя інформація</th>
@@ -148,6 +148,60 @@
         </tbody>
     </table>
 
+    <% if(analysis.length > 0){ %>
+        <table id="tableAnalysis" style="width: 60%; margin-left: 15%"
+               class="table table-striped table-responsive-md btn-table"
+               style="width: 70%; margin-left: 15%">
+            <thead>
+            <tr>
+                <th>Тип аналізу</th>
+                <th>Дата</th>
+                <th>Результати</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (let i = 0; i < analysis.length; i++) { %>
+                <tr>
+                    <td><%= analysis[i].Analysis_Category %></td>
+                    <td><%= analysis[i].Analysis_Date %></td>
+                    <td><%= analysis[i].Analysis_Info %></td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    <% } %>
+    <table id="tableAllergies" style="width: 60%; margin-left: 15%"
+           class="table table-striped table-responsive-md btn-table"
+           style="width: 70%; margin-left: 15%">
+        <thead>
+        <tr>
+            <th colspan="2">Аллергії</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for (let j = 0; j < allergies.length; j++) { %>
+            <tr style="width: 100%">
+                <td id="allergy<%= j %>"><%= allergies[j].allergy %></td>
+                <td>
+                    <% if (allergies[j].exists){ _%>
+                        <input type="checkbox" id="check<%= j %>" checked>
+                    <% } else{ %>
+                        <input type="checkbox" id="check<%= j %>">
+                    <% } %>
+                </td>
+            </tr>
+        <% } %>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="2" style="text-align:center;">
+                <button class="btn btn-primary" value="Apply" type="button" id="allergyBtn" onclick="applyAllergies()">
+                    Apply
+                </button>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
 </div>
 <script src="js/table.js"></script>
 <script>

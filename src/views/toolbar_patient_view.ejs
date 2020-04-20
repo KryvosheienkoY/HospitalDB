@@ -41,7 +41,7 @@
                 success: function (response) {
                     console.log("success of /patient/my_profile/");
                     $("html").html(response);
-                    window.history.pushState({}, null, "localhost:8080/patient/my_profile");
+                    window.history.pushState("", "", "localhost:8080/patient/my_profile");
                 }
             });
         });

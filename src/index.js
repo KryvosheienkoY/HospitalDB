@@ -6,7 +6,7 @@ app.set('views', './src/views');
 // app.set('views', 'C:/Users/USER/WebstormProjects/HospitalDB/src/views');
 app.use('/', express.static(__dirname + '/../public'));
 app.use('/patient', express.static(__dirname + '/../public'));
- // app.use('/patient/my_profile', express.static(__dirname + '/../public'));
+// app.use('/patient/my_profile', express.static(__dirname + '/../public'));
 app.listen(8080);
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
@@ -191,12 +191,78 @@ app.get("/patient/my_profile", function (req, res) {
             console.log(result[0]);
             var sql = "SELECT * FROM analysis WHERE Patient_ID=?";
             con.query(sql, id, function (er, resul) {
-                if (er) console.log(er);
-                res.render("patient_myprofile_view", {
-                    "p": result[0],
-                     "analysis": resul
+                var sql = "SELECT Allergy_Name FROM allergy INNER JOIN patientallergy ON allergy.Allergy_ID=patientallergy.Allergy_ID WHERE Patient_ID=?";
+                con.query(sql, id, function (e, resu) {
+                    var sql = "SELECT Allergy_Name FROM allergy WHERE Allergy_ID NOT IN (SELECT Allergy_ID FROM patientallergy WHERE Patient_ID= ?)";
+
+                    con.query(sql, id, function (error, re) {
+                        if (er) console.log(er);
+                        let aller = [];
+                        for (let x = 0; x < resu.length; x++) {
+                            aller.push({allergy: resu[x].Allergy_Name, exists: true});
+                        }
+                        for (let x = 0; x < re.length; x++) {
+                            aller.push({allergy: re[x].Allergy_Name, exists: false});
+                        }
+                        res.render("patient_myprofile_view", {
+                            "p": result[0],
+                            "analysis": resul,
+                            "allergies": aller
+                        });
+                    });
                 });
             });
+        });
+    }
+});
+
+
+app.post('/patient/allergies', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        var allergies = req.body.patient_allergies;
+        let sql = "SELECT (Allergy_Name, Allergy_ID) FROM allergy INNER JOIN patientallergy ON allergy.Allergy_ID=patientallergy.Allergy_ID WHERE Patient_ID=?";
+        con.query(sql, id, function (err, result) {
+            //result   -   дані про алергії пацієнта
+            let newAllergies = [];
+            for (let al in allergies) {
+                if (!result.find(el => el.Allergy_Name == al)) {
+                    newAllergies.push(al);
+                }
+            }
+            console.log("new allergies" + newAllergies);
+            let removedAll = [];
+            for (let al in result) {
+                if (!allergies.find(el => al.Allergy_Name == el)) {
+                    removedAll.push(al.Allergy_ID);
+                }
+            }
+            console.log("removed allergies" + removedAll);
+            var sql = "Delete FROM patientallergy WHERE Patient_ID=? AND Allergy_ID=?";
+            for (let i = 0; i < removedAll.length; i++) {
+                con.query(sql, [id, removedAll[i]], function (er, resul) {
+                    if (er) {
+                        console.log(er);
+                    }
+                });
+            }
+            var sql = "SELECT Allergy_ID,Allergy_Name FROM allergy";
+            let newIDs = [];
+            con.query(sql, function (er, resu) {
+                for (let al in newAllergies) {
+                    newIDs.push(resu.find(el => el.Allergy_Name == al).Allergy_ID);
+                }
+            });
+            console.log("new ids   " + newIDs)
+            var sql = "INSERT INTO patientallergy VALUES (?,?))";
+            for (let i = 0; i < newIDs.length; i++) {
+                con.query(sql, [id, newIDs[i]], function (er, resul) {
+                    if (er) {
+                        console.log(er);
+                    }
+                });
+            }
         });
     }
 });
