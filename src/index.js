@@ -316,9 +316,13 @@ app.post("/patient/edit", function (req, res) {
     if (req.headers && req.headers.authorization) {
         var auth = req.headers.authorization;
         let {role, id} = jwt.verify(auth, Secret);
+        console.log(req.body);
         let sql = "UPDATE patient SET ? WHERE Patient_ID=?";
-        let field ="{"+req.body.editedField+":"+req.body.newValue+"}";
-        con.query(sql, [field, id], function (err, result) {
+        console.log("Input parameters   "+req.body.editedField+"   "+req.body.newValue);
+        let field ="{ \""+req.body.fieldName+"\":\""+req.body.newValue+"\"}";
+        console.log(field);
+        let x=JSON.parse(field);
+        con.query(sql, [x, id], function (err, result) {
             if (err) console.log(err);
         });
     }

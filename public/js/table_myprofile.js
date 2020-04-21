@@ -95,7 +95,7 @@ function requestToEditMyProfilePatientDB(btnid) {
             return;
 
     }
-    let dat = "{fieldName:" + editedField + ", newValue: " + newData + "}";
+    let dat = { fieldName: editedField , newValue:  newData};
     let url ='/patient/edit/';
     let successMsg = "success of "+url;
     console.log("for ajax - " + dat);
