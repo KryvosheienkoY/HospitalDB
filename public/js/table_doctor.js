@@ -1,4 +1,3 @@
-
 function requestToEditDoctorDB(btnid) {
     let id = btnid.replace(/\D/g, "");
     let idTr = "#" + id + "editing";
@@ -9,22 +8,18 @@ function requestToEditDoctorDB(btnid) {
         tdInfo.push($(this).html());
     });
 
-    let data = [{Doctor_ID: tdInfo[0]}, {Department_ID: tdInfo[1]}, {Doctor_Surname: tdInfo[2]},
-        {Doctor_Firstname: tdInfo[3]}, {Doctor_Patronymic: tdInfo[4]}, {Department_Head: tdInfo[5]},
-        {Doctor_PhoneN: tdInfo[6]}, {Doctor_eAddress: tdInfo[7]}, {Doctor_Photo: tdInfo[8]},
-        {Doctor_Specialization: tdInfo[9]}, {Scientific_Degree: tdInfo[10]}];
+    let data = {
+        Doctor_ID: tdInfo[0], Department_ID: tdInfo[1], Doctor_Surname: tdInfo[2],
+        Doctor_Firstname: tdInfo[3], Doctor_Patronymic: tdInfo[4], Department_Head: tdInfo[5],
+        Doctor_PhoneN: tdInfo[6], Doctor_eAddress: tdInfo[7], Doctor_Photo: tdInfo[8],
+        Doctor_Specialization: tdInfo[9], Scientific_Degree: tdInfo[10]
+    };
 
     console.log("for ajax - ");
     console.log(data);
     let url = '/admin/edit/doctor';
-    $.ajax({
-        type: 'Post',
-        data: data,
-        url: url,
-        success: function (response) {
-            console.log("success of edit my profile of Doctor");
-        }
-    });
+    let successMsg = "success ajax of " + url;
+    sendAjax(url, successMsg, {doctor: data});
 }
 
 function rowEdit(but) {  //Inicia la edición de una fila
@@ -87,7 +82,7 @@ function addRow(but) {
 }
 
 function requestToAddDoctorBD($row) {
-    let tdInfo=[];
+    let tdInfo = [];
     $($row).find('td').find('input').each(function () {
         tdInfo.push($(this).val());
     });
@@ -95,10 +90,12 @@ function requestToAddDoctorBD($row) {
     console.log("tdinfo");
     console.log(tdInfo);
 
-    let data = { Department_ID: tdInfo[1], Doctor_Surname: tdInfo[2],
+    let data = {
+        Department_ID: tdInfo[1], Doctor_Surname: tdInfo[2],
         Doctor_Firstname: tdInfo[3], Doctor_Patronymic: tdInfo[4], Department_Head: tdInfo[5],
         Doctor_PhoneN: tdInfo[6], Doctor_eAddress: tdInfo[7], Doctor_Photo: tdInfo[8],
-        Doctor_Specialization: tdInfo[9], Scientific_Degree: tdInfo[10]};
+        Doctor_Specialization: tdInfo[9], Scientific_Degree: tdInfo[10]
+    };
 
 
     console.log("for ajax - ");
@@ -110,9 +107,9 @@ function requestToAddDoctorBD($row) {
     $.ajax({
         type: 'GET',
         headers: {Authorization: sessionStorage.getItem("token")},
-        url: '/admin/patient_table',
+        url: '/admin/doctor_table',
         success: function (response) {
-            console.log("/admin/patient_table");
+            console.log("/admin/doctor_table");
             $("body").html(response);
         }
     });

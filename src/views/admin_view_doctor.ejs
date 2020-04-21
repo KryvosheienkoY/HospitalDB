@@ -38,7 +38,9 @@
                         <td><%= doctors[i].Department_Head %></td>
                         <td><%= doctors[i].Doctor_PhoneN %></td>
                         <td><%= doctors[i].Doctor_eAddress %></td>
-                        <td>%= doctors[i].Doctor_Photo %></td>
+                        <td>%= doctors[i].Doctor_Photo
+                            %>
+                        </td>
                         <td><%= doctors[i].Doctor_Specialization %></td>
                         <td><%= doctors[i].Scientific_Degree %></td>
                         <td name="buttons">
@@ -63,9 +65,9 @@
                     <td>ID</td>
                     <% for (let i = 1; i < 11; i++) { %>
                         <td>
-                            <% if(i === 8){ %>
+                            <% if(i === 7){ %>
                                 <input required type="email" class="form-control input-sm">
-                            <% }else if (i === 7){ %>
+                            <% }else if (i === 6){ %>
                                 <input required type="tel" placeholder="0957123345"
                                        pattern="[0-9]{10}" class="form-control validate">
                             <% }else { %>
@@ -85,7 +87,11 @@
     <% } else { %>
         <p>Table is empty</p>
     <% } %>
+    <button style="margin: 10px" class="d-print-none btn btn-sm btn-primary" type="button" value="Print"
+            onclick="window.print()">Print
+    </button>
 </div>
+<div class="footer">Система обліку пацієнтів</div>
 <script>
     $('#table1').SetEditable("2,3,4,5,6,7,8,9,10,11");
 </script>
