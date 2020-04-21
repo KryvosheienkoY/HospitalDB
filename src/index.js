@@ -349,6 +349,7 @@ app.post('/admin/delete/patient', function (req, res) {
     }
 });
 app.post('/admin/edit/patient', function (req, res) {
+    console.log("let`s edit ");
     if (req.headers && req.headers.authorization) {
         var auth = req.headers.authorization;
         let {role, id} = jwt.verify(auth, Secret);

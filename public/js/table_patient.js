@@ -18,15 +18,8 @@ function requestToEditPatientBD(btnid) {
     console.log("for ajax - ");
     console.log(data);
     let url ="/admin/edit/patient";
-    $.ajax({
-        type: 'Post',
-        headers: {Authorization: sessionStorage.getItem("token")},
-        data: data,
-        url: url,
-        success: function (response) {
-            console.log("success of edit my profile of patient");
-        }
-    });
+    let successMsg="success of " +url;
+    sendAjax(url,successMsg,data);
 }
 
 function rowEdit(but) {  //Inicia la edición de una fila
@@ -38,7 +31,7 @@ function rowEdit(but) {  //Inicia la edición de una fila
         let cont = $td.html(); //lee contenido
         let div = '<div style="display: none;">' + cont + '</div>';  //guarda contenido
         let input;
-        input = '<input class="form-control input-sm"  value="' + cont + '">';
+        input = '<input class="form-control input-sm"  value="' + cont + '" style="padding: 0">';
         $td.html(div + input);  //fija contenido
     });
     FijModoEdit(but.id);
@@ -55,8 +48,28 @@ function rowAcep(but) {
     });
     if (!failed) {
         FijModoNormal(but.id);
-        params.onEdit($row);
+        // params.onEdit($row);
         console.log("row accepted - " + but.id);
         requestToEditPatientBD(but.id);
     }
+}
+
+function requestToDeletePatientBD(row) {
+    let patientId=row.find('td')[0].html();
+    let data = [{Patient_ID: patientId}];
+    console.log("for ajax - ");
+    console.log(data);
+    let url ="/admin/delete/patient";
+    let successMsg="success of " +url;
+    let ajaxData= {patient: data};
+    sendAjax(url,successMsg,ajaxData);
+}
+
+function rowDelete(but) {
+    let $row = $(but).parents('tr');
+    requestToDeletePatientBD($row);
+    // params.onBeforeDelete($row);
+    $row.remove();
+    // params.onDelete();
+
 }

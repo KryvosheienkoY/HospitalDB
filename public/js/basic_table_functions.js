@@ -1,23 +1,22 @@
-
 "use strict";
 //Global variables
-let params = null;  		//Parameters
-let colsEdi = null;
-let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-let phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-$.fn.SetEditable = function (cols,options) {
+var params = null;  		//Parameters
+var colsEdi = null;
+var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+var phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+$.fn.SetEditable = function (cols, options) {
     let defaults = {
         columnsEd: cols,         //Index to editable columns. If null all td editables. Ex.: "1,2,3,4,5"
         $addButton: null,        //Jquery object of "Add" button
-        onEdit: function () {
-            console.log("edited")
-        },   //Called after edition
-        onBeforeDelete: function () {
-        }, //Called before deletion
-        onDelete: function () {
-        }, //Called after deletion
-        onAdd: function () {
-        }     //Called when added a new row
+        // onEdit: function () {
+        //     console.log("edited")
+        // },   //Called after edition
+        // onBeforeDelete: function () {
+        // }, //Called before deletion
+        // onDelete: function () {
+        // }, //Called after deletion
+        // onAdd: function () {
+        // }     //Called when added a new row
     };
     params = $.extend(defaults, options);
 
@@ -72,7 +71,7 @@ function FijModoNormal(id) {
     $(bd).show();
 
     let row = $('#' + id).closest('tr');
-    let idd= row.attr('id')+"editing".replace(/\D/g, "");
+    let idd = row.attr('id') + "editing".replace(/\D/g, "");
     row.attr('id', idd);  //quita marca
 }
 
@@ -87,7 +86,7 @@ function FijModoEdit(id) {
     $(be).hide();
     $(bd).hide();
     let row = $('#' + id).closest('tr');
-    let idd= row.attr('id')+"editing";
+    let idd = row.attr('id') + "editing";
     row.attr('id', idd);
 }
 
@@ -113,12 +112,6 @@ function rowCancel(but) {
     FijModoNormal(but.id);
 }
 
-function rowDelete(but) {  //Deleteina la fila actual
-    let $row = $(but).parents('tr');  //accede a la fila
-    params.onBeforeDelete($row);
-    $row.remove();
-    params.onDelete();
-}
 
 function rowAddNew(tabId) {  //Agrega fila a la tabla indicada.
     let $tab_en_edic = $("#" + tabId);  //Table to edit
@@ -152,7 +145,7 @@ function rowAddNew(tabId) {  //Agrega fila a la tabla indicada.
             }
         });
     }
-    params.onAdd();
+    // params.onAdd();
 }
 
 function TableToCSV(tabId, separator) {  //Convierte tabla a CSV
@@ -181,4 +174,15 @@ function TableToCSV(tabId, separator) {  //Convierte tabla a CSV
     return tmp;
 }
 
+function sendAjax(url, successMsg, data) {
+    $.ajax({
+        type: 'Post',
+        headers: {Authorization: sessionStorage.getItem("token")},
+        data: data,
+        url: url,
+        success: function (response) {
+            console.log(successMsg);
+        }
 
+    })
+}

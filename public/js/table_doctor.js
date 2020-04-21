@@ -53,7 +53,7 @@ function rowAcep(but) {
     });
     if (!failed) {
         FijModoNormal(but.id);
-        params.onEdit($row);
+       // params.onEdit($row);
         console.log("row accepted - " + but.id);
         requestToEditDoctorDB(but.id);
     }
