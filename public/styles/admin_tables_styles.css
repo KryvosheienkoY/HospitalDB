@@ -1,0 +1,40 @@
+@media screen {
+    div.footer, div.header {
+        display: none;
+    }
+}
+@media print {
+    div.footer{
+        position: fixed;
+        bottom: 0;
+    }
+    div.header{
+        position: fixed;
+        top: 0;
+    }
+}
+@page
+{
+    size: auto;   /* auto is the initial value */
+    margin: 0mm;  /* this affects the margin in the printer settings */
+}
+
+td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    margin: 0;
+}
+
+input {
+    padding: 0;
+}
+
+th {
+    margin: 0.1rem;
+}
+
+table {
+    table-layout: fixed;
+    padding: 0;
+}

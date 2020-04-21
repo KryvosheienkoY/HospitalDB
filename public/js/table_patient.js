@@ -80,7 +80,6 @@ function rowCancel(but) {
     let $row = $(but).parents('tr');  //accede a la fila
     let $cols = $row.find('td');  //lee campos
     if (!ModoEdicion($row)) return;  //Ya está en edición
-    //Está en edición. Hay que finalizar la edición
     IterarCamposEdit($cols, function ($td) {  //itera por la columnas
         let cont = $td.find('div').html(); //lee contenido del div
         $td.html(cont);  //fija contenido y Deleteina controles
@@ -94,10 +93,6 @@ function addRow(but) {
     let $row = $(but).parents('tr');
     let $cols = $row.find('td');
     let failed = false;
-    // IterarCamposEdit($cols, function ($td) {
-    //     let cont = $td.find('input').val();
-    //     $td.html(cont);
-    // });dx2 1err34
     if (!failed) {
         requestToAddPatientBD($row);
     }

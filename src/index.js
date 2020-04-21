@@ -42,6 +42,15 @@ app.get('/admin/patient_table', (req, res) => {
 
 });
 
+app.get('/admin/doctor_table', (req, res) => {
+    var sql = "Select * FROM `doctor`";
+    con.query(sql, function (err, result) {
+        substringDate(result);
+        res.render('admin_view_doctor',{"doctors": result});
+    });
+
+});
+
 
 app.get('/patient', (req, res) => {
     res.render('main_patient_view');

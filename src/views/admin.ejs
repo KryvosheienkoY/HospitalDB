@@ -2,22 +2,46 @@
 <%- include('head'); %>
 <body>
 <%- include('toolbar_admin_view',{section: 'admin'}); %>
+<style type="text/css">
+    button {
+        border: 1px solid #ffcc04 !important;
+        margin: 10px;
+    }
 
-<div>
+    ul {
+        list-style-type: none;
+    }
+</style>
+<div style="margin: 20px">
     <p type="text" id="getID" style="display: none"><%= token %></p>
-    <button class="btn  btn-sm btn-primary" onclick="sendAjaxPatientTable()">Таблиця пацієнтів</button>
-
+    <p>Список таблиць</p>
+    <ul>
+        <li>
+            <button class="btn  btn-sm btn-default" onclick="sendAjaxPatientTable()">Таблиця пацієнтів</button>
+        </li>
+        <li>
+            <button class="btn  btn-sm btn-default" onclick="sendAjaxDoctorTable()">Таблиця лікарів</button>
+        </li>
+    </ul>
 </div>
 <script>
-    function sendAjaxPatientTable(){
+    function sendAjaxPatientTable() {
+        let url = '/admin/patient_table';
+        sendAjax(url);
+    }
 
-        console.log("token -" + sessionStorage.getItem('token'));
+    function sendAjaxDoctorTable() {
+        let url = '/admin/doctor_table';
+        sendAjax(url);
+    }
+
+    function sendAjax(url) {
         $.ajax({
             type: 'GET',
             headers: {Authorization: sessionStorage.getItem("token")},
-            url: '/admin/patient_table',
+            url: url,
             success: function (response) {
-                console.log("/admin/patient_table");
+                console.log("successful ajax - " + url);
                 $("body").html(response);
             }
         });
@@ -25,8 +49,8 @@
 </script>
 <script>
     $(document).ready(function () {
-        let t=$('#getID').html();
-        sessionStorage.setItem('token',t);
+        let t = $('#getID').html();
+        sessionStorage.setItem('token', t);
     });
 </script>
 </body>
