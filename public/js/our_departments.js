@@ -2,7 +2,6 @@ function addDoctorToDepartment(department_ID, name, department_Head, phone, emai
     let containerDoctorId = "#containerDoctor" + department_ID;
     console.log("photo-");
     console.log(photo);
-
 //     let bytes = new Uint8Array(photo.data.length / 2);
 //     for (var i = 0; i < photo.data.length; i += 2) {
 //         bytes[i / 2] = parseInt(photo.data.join('').substring(i, i + 2), /* base = */ 16);

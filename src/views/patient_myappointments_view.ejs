@@ -3,32 +3,48 @@
 <body>
 <%- include('toolbar_patient_view', {section: 'main'}); %>
 
-
 <% if(appointments.length > 0){ %>
-    <table id="tableAppointments" style="width: 60%; margin-left: 15%"
-           class="table table-striped table-responsive-md btn-table"
-           style="width: 70%; margin-left: 15%">
+    <table id="tableAppointments" class="table table-striped table-responsive-md btn-table"
+           style="max-width: 100%; margin: 15px;width: auto;">
         <thead>
-        <!--<tr>-->
-            <!--<th>Тип аналізу</th>-->
-            <!--<th>Дата</th>-->
-            <!--<th>Результати</th>-->
-        <!--</tr>-->
-        <!--</thead>-->
-        <!--<tbody>-->
-        <!--<% for (let i = 0; i < analysis.length; i++) { %>-->
-            <!--<tr>-->
-                <!--<td><%= analysis[i].Analysis_Category %></td>-->
-                <!--<td><%= analysis[i].Analysis_Date %></td>-->
-                <!--<td><%= analysis[i].Analysis_Info %></td>-->
-            <!--</tr>-->
-        <!--<% } %>-->
-        <!--</tbody>-->
+        <tr>
+            <th>Номер</th>
+            <th>Дата прийому</th>
+            <th>Лікар</th>
+            <th>Відділення</th>
+            <th>Діагноз</th>
+            <th>Дата встановлення діагнозу</th>
+            <th>Дата вилікування діагнозу</th>
+            <th>Presc_Instruction</th>
+            <th>Medicine_Name</th>
+            <!--<th> Medicine_Type</th>-->
+            <!--<th>Presc_Required</th>-->
+            <!--<th> Medical_Form</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <% for (let i = 0; i < appointments.length; i++) { %>
+            <tr>
+                <td><%= appointments[i].Ticket_Num %></td>
+                <td><%= appointments[i].Appointment_Date %></td>
+                <td><%= appointments[i].Doctor_Surname %></td>
+                <td><%= appointments[i].Department_Name %></td>
+                <td><%= appointments[i].Diagnosys_Name %></td>
+                <td><%= appointments[i].Diagnosys_StartDate %></td>
+                <td><%= appointments[i].Diagnosys_EndDate %></td>
+                <td><%= appointments[i].Presc_Instruction %></td>
+                <td><%= appointments[i].Medicine_Name %></td>
+                <!--<td><%= appointments[i].Medicine_Type %></td>-->
+                <!--<td><%= appointments[i].Presc_Required %></td>-->
+                <!--<td><%= appointments[i].Medical_Form %></td>-->
+            </tr>
+        <% } %>
+        </tbody>
     </table>
-<% } else{%>
-    <p style="margin-top: 30%">Ваша історія прийомів пуста.</p>
-<%}%>
+<% } else{ %>
 
+    <p style="margin-top: 10%;margin-left: 40%;">Ваша історія прийомів пуста.</p>
+<% } %>
 
 </body>
 </html>

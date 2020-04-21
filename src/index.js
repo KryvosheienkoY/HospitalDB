@@ -33,6 +33,16 @@ app.get('/', (req, res) => {
     res.render('main_unlogged_view');
 });
 
+app.get('/admin', (req, res) => {
+    var sql = "Select * FROM `patient`";
+    con.query(sql, function (err, result) {
+        substringDate(result);
+        res.render('admin_view',{"patients": result});
+    });
+
+});
+
+
 app.get('/patient', (req, res) => {
     res.render('main_patient_view');
 });
@@ -181,6 +191,13 @@ app.get('/delete/(:table)/(:id)', function (req, res) {
     });
 });
 
+function substringDate(result) {
+    for(let i=0; i<result.length;++i){
+        let data = "" + result[i].Patient_Birthdate;
+        result[i].Patient_Birthdate = data.substring(0, 15);
+    }
+}
+
 app.get("/patient/my_profile", function (req, res) {
     if (req.headers && req.headers.authorization) {
         var auth = req.headers.authorization;
@@ -189,6 +206,7 @@ app.get("/patient/my_profile", function (req, res) {
         con.query(sql, id, function (err, result) {
             if (err) console.log(err);
             console.log(result[0]);
+            substringDate(result);
             var sql = "SELECT * FROM analysis WHERE Patient_ID=?";
             con.query(sql, id, function (er, resul) {
                 var sql = "SELECT Allergy_Name FROM allergy INNER JOIN patientallergy ON allergy.Allergy_ID=patientallergy.Allergy_ID WHERE Patient_ID=?";
@@ -216,27 +234,27 @@ app.get("/patient/my_profile", function (req, res) {
     }
 });
 
-
 app.post('/patient/allergies', function (req, res) {
     if (req.headers && req.headers.authorization) {
         var auth = req.headers.authorization;
         let {role, id} = jwt.verify(auth, Secret);
-        var allergies = req.body.patient_allergies;
-        let sql = "SELECT (Allergy_Name, Allergy_ID) FROM allergy INNER JOIN patientallergy ON allergy.Allergy_ID=patientallergy.Allergy_ID WHERE Patient_ID=?";
+        var allergies = req.body.allergies;
+        console.log(allergies);
+        let sql = "SELECT Allergy_Name, patientallergy.Allergy_ID FROM allergy INNER JOIN patientallergy ON allergy.Allergy_ID=patientallergy.Allergy_ID WHERE patientallergy.Patient_ID=?";
         con.query(sql, id, function (err, result) {
             //result   -   дані про алергії пацієнта
             let newAllergies = [];
-            for (let al in allergies) {
-                if (!result.find(el => el.Allergy_Name == al)) {
-                    newAllergies.push(al);
-                }
+            console.log("rezultat  " + result[0].Allergy_ID);
+            for (let x = 0; x < allergies.length; x++) {
+                console.log(allergies[x]);
+                if (!result.find(({Allergy_Name}) => Allergy_Name === allergies[x]))
+                    newAllergies.push(allergies[x]);
             }
-            console.log("new allergies" + newAllergies);
+            console.log("new allergies  " + newAllergies);
             let removedAll = [];
-            for (let al in result) {
-                if (!allergies.find(el => al.Allergy_Name == el)) {
-                    removedAll.push(al.Allergy_ID);
-                }
+            for (let x = 0; x < result.length; x++) {
+                if (!allergies.find(el => result[x].Allergy_Name === el))
+                    removedAll.push(result[x].Allergy_ID);
             }
             console.log("removed allergies" + removedAll);
             var sql = "Delete FROM patientallergy WHERE Patient_ID=? AND Allergy_ID=?";
@@ -250,19 +268,41 @@ app.post('/patient/allergies', function (req, res) {
             var sql = "SELECT Allergy_ID,Allergy_Name FROM allergy";
             let newIDs = [];
             con.query(sql, function (er, resu) {
-                for (let al in newAllergies) {
-                    newIDs.push(resu.find(el => el.Allergy_Name == al).Allergy_ID);
+                for (let x = 0; x < newAllergies.length; x++) {
+                    var sq = "INSERT INTO patientallergy VALUES (?,?)";
+                    let v = resu.find(({Allergy_Name}) => Allergy_Name === newAllergies[x]).Allergy_ID;
+                    console.log(v);
+                    con.query(sq, [id, v], function (er, resul) {
+                        if (er) {
+                            console.log(er);
+                        }
+                    });
                 }
             });
-            console.log("new ids   " + newIDs)
-            var sql = "INSERT INTO patientallergy VALUES (?,?))";
-            for (let i = 0; i < newIDs.length; i++) {
-                con.query(sql, [id, newIDs[i]], function (er, resul) {
-                    if (er) {
-                        console.log(er);
-                    }
-                });
-            }
+        });
+    }
+});
+
+app.get("/patient/my_appointments", function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        let sql = "SELECT Doctor_Surname, Department_Name, appointment.Ticket_Num, Appointment_Date, Diagnosys_Name, " +
+            "Diagnosys_StartDate, Diagnosys_EndDate,Presc_Instruction, Medicine_Name FROM appointment " +
+            "INNER JOIN doctor ON doctor.Doctor_ID=appointment.Doctor_ID " +
+            "INNER JOIN department on department.Department_ID=doctor.Department_ID " +
+            "LEFT OUTER JOIN diagnosting on appointment.Ticket_Num=diagnosting.Ticket_Num " +
+            "LEFT OUTER JOIN diagnosys ON diagnosys.Diagnosys_ID=diagnosting.Diagnosys_ID " +
+            "LEFT OUTER JOIN prescription ON diagnosys.Diagnosys_ID=prescription.Diagnosys_ID " +
+            "LEFT OUTER JOIN prescribed ON prescribed.Prescription_ID=prescription.Prescription_ID " +
+            "LEFT OUTER JOIN medicine ON medicine.Medicine_ID=prescribed.Medicine_ID WHERE Patient_ID=?";
+        con.query(sql, id, function (err, result) {
+            if (err) console.log(err);
+            console.log(result);
+            substringDate(result);
+            res.render("patient_myappointments_view", {
+                "appointments": result
+            });
         });
     }
 });

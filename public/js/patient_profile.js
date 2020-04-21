@@ -18,7 +18,7 @@ function applyAllergies() {
     $.ajax({
         type: 'post',
         headers: {Authorization: sessionStorage.getItem("token")},
-        data: patient_allergies,
+        data: {allergies: patient_allergies},
         url: '/patient/allergies',
         success: function (response) {
             console.log("success of /patient/my_profile/");
