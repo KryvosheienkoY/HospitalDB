@@ -33,10 +33,6 @@ app.get('/', (req, res) => {
     res.render('main_unlogged_view');
 });
 
-app.get('/admin', (req, res) => {
-    res.render('admin');
-});
-
 app.get('/admin/patient_table', (req, res) => {
     var sql = "Select * FROM `patient`";
     con.query(sql, function (err, result) {
@@ -323,9 +319,6 @@ app.post("/patient/edit", function (req, res) {
         let field ="{"+req.body.editedField+":"+req.body.newValue+"}";
         con.query(sql, [field, id], function (err, result) {
             if (err) console.log(err);
-            console.log(result[0]);
-            substringDate(result);
-
         });
     }
 });

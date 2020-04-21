@@ -4,6 +4,7 @@
 <%- include('toolbar_admin_view',{section: 'admin'}); %>
 
 <div>
+    <p type="text" id="getID" style="display: none"><%= token %></p>
     <button class="btn  btn-sm btn-primary" onclick="sendAjaxPatientTable()">Таблиця пацієнтів</button>
 
 </div>
@@ -21,6 +22,12 @@
             }
         });
     }
+</script>
+<script>
+    $(document).ready(function () {
+        let t=$('#getID').html();
+        sessionStorage.setItem('token',t);
+    });
 </script>
 </body>
 </html>
