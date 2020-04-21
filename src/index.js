@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 app.use(express.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
-app.set('views', './src/views');
-// app.set('views', 'C:/Users/USER/WebstormProjects/HospitalDB/src/views');
+// app.set('views', './src/views');
+app.set('views', 'C:/Users/USER/WebstormProjects/HospitalDB/src/views');
 app.use('/', express.static(__dirname + '/../public'));
 app.use('/patient', express.static(__dirname + '/../public'));
 // app.use('/patient/my_profile', express.static(__dirname + '/../public'));
@@ -152,6 +152,7 @@ app.post('/login', function (req, res) {
                     });
                 }
                 console.log("Password matches");
+                console.log("FKS"+result[0].Patient_ID +"   "+result[0].Doctor_ID);
                 if (result[0].Patient_ID == null && result[0].Doctor_ID == null) {
                     let user = {role: 1, id: -1};
                     const token = jwt.sign(user, Secret, jwt.HS256);
@@ -360,16 +361,23 @@ app.post('/admin/edit/patient', function (req, res) {
     if (req.headers && req.headers.authorization) {
         var auth = req.headers.authorization;
         let {role, id} = jwt.verify(auth, Secret);
+        console.log(role);
         if(role!=1)
         {
+            console.log("not correct role");
             res.json({response:"Fail. No rights to delete"});
         }
         else {
+            console.log("editing");
+            console.log(req.body.patient);
             var sql = "UPDATE patient SET ? WHERE Patient_ID=?";
-            con.query(sql, [req.body.patient,req.body.patient.id], function (err, result) {
+            con.query(sql, [req.body.patient,req.body.patient.Patient_ID], function (err, result) {
                 console.log("updated");
                 res.json({res: "success"});
             });
         }
+    }
+    else{
+        console.log("not authorised");
     }
 });

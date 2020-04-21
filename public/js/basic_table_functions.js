@@ -177,7 +177,7 @@ function TableToCSV(tabId, separator) {  //Convierte tabla a CSV
 function sendAjax(url, successMsg, data) {
     $.ajax({
         type: 'Post',
-        headers: {Authorization: sessionStorage.getItem("token")},
+        headers: {authorization: sessionStorage.getItem("token")},
         data: data,
         url: url,
         success: function (response) {

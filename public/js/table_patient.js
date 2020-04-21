@@ -9,17 +9,17 @@ function requestToEditPatientBD(btnid) {
         tdInfo.push($(this).html());
     });
 
-    let data = [{Patient_ID: tdInfo[0]}, {Patient_Surname: tdInfo[1]}, {Patient_Firstname: tdInfo[2]},
-        {Patient_Patronymic: tdInfo[3]}, {Patient_City: tdInfo[4]}, {Patient_Street: tdInfo[5]},
-        {Patient_Building: tdInfo[6]}, {Patient_Apt: tdInfo[7]}, {Patient_PhoneN: tdInfo[8]},
-        {Patient_BloodType: tdInfo[9]}, {Patient_Rhesus: tdInfo[10]}, {Patient_Birthdate: tdInfo[11]},
-        {Patient_eAddress: tdInfo[12]}, {Patient_Notes: tdInfo[13]},];
+    let data = {Patient_ID: tdInfo[0], Patient_Surname: tdInfo[1], Patient_Firstname: tdInfo[2],
+        Patient_Patronymic: tdInfo[3], Patient_City: tdInfo[4], Patient_Street: tdInfo[5],
+        Patient_Building: tdInfo[6], Patient_Apt: tdInfo[7], Patient_PhoneN: tdInfo[8],
+        Patient_BloodType: tdInfo[9], Patient_Rhesus: tdInfo[10], Patient_Birthdate: tdInfo[11],
+        Patient_eAddress: tdInfo[12], Patient_Notes: tdInfo[13]};
 
     console.log("for ajax - ");
     console.log(data);
     let url ="/admin/edit/patient";
     let successMsg="success of " +url;
-    sendAjax(url,successMsg,data);
+    sendAjax(url,successMsg,{patient:data});
 }
 
 function rowEdit(but) {  //Inicia la edición de una fila
