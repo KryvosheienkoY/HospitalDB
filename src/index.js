@@ -318,7 +318,7 @@ app.post("/patient/edit", function (req, res) {
         let {role, id} = jwt.verify(auth, Secret);
         console.log(req.body);
         let sql = "UPDATE patient SET ? WHERE Patient_ID=?";
-        console.log("Input parameters   "+req.body.editedField+"   "+req.body.newValue);
+
         let field ="{ \""+req.body.fieldName+"\":\""+req.body.newValue+"\"}";
         console.log(field);
         let x=JSON.parse(field);
@@ -353,6 +353,7 @@ app.post('/admin/delete/patient', function (req, res) {
             res.json({response:"Fail. No rights to delete"});
         }
         else {
+
             var sql = "DELETE FROM patient WHERE Patient_ID=?";
             con.query(sql, req.body.id, function (err, result) {
                 res.json({res: "success"});
@@ -376,6 +377,301 @@ app.post('/admin/edit/patient', function (req, res) {
             console.log(req.body.patient);
             var sql = "UPDATE patient SET ? WHERE Patient_ID=?";
             con.query(sql, [req.body.patient,req.body.patient.Patient_ID], function (err, result) {
+                console.log("updated");
+                res.json({res: "success"});
+            });
+        }
+    }
+    else{
+        console.log("not authorised");
+    }
+});
+
+app.post('/admin/add/doctor', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if(role!=1)
+        {
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+            var sql = "INSERT INTO doctor SET ?";
+            con.query(sql, req.body.doctor, function (err, result) {
+                res.json({res: "success"});
+            });
+        }
+    }
+});
+app.post('/admin/delete/doctor', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if(role!=1)
+        {
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+
+            var sql = "DELETE FROM doctor WHERE Doctor_ID=?";
+            con.query(sql, req.body.id, function (err, result) {
+                res.json({res: "success"});
+            });
+        }
+    }
+});
+app.post('/admin/edit/doctor', function (req, res) {
+    console.log("let`s edit ");
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        console.log(role);
+        if(role!=1)
+        {
+            console.log("not correct role");
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+            console.log("editing");
+            console.log(req.body.doctor);
+            var sql = "UPDATE doctor SET ? WHERE Doctor_ID=?";
+            con.query(sql, [req.body.doctor,req.body.doctor.Doctor_ID], function (err, result) {
+                console.log("updated");
+                res.json({res: "success"});
+            });
+        }
+    }
+    else{
+        console.log("not authorised");
+    }
+});
+
+app.post('/admin/add/department', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if(role!=1)
+        {
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+            var sql = "INSERT INTO department SET ?";
+            con.query(sql, req.body.department, function (err, result) {
+                res.json({res: "success"});
+            });
+        }
+    }
+});
+app.post('/admin/delete/department', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if(role!=1)
+        {
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+
+            var sql = "DELETE FROM department WHERE Department_ID=?";
+            con.query(sql, req.body.id, function (err, result) {
+                res.json({res: "success"});
+            });
+        }
+    }
+});
+app.post('/admin/edit/department', function (req, res) {
+    console.log("let`s edit ");
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        console.log(role);
+        if(role!=1)
+        {
+            console.log("not correct role");
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+            console.log("editing");
+            console.log(req.body.patient);
+            var sql = "UPDATE department SET ? WHERE Department_ID=?";
+            con.query(sql, [req.body.department,req.body.department.Department_ID], function (err, result) {
+                console.log("updated");
+                res.json({res: "success"});
+            });
+        }
+    }
+    else{
+        console.log("not authorised");
+    }
+});
+
+app.post('/admin/add/appointment', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if(role!=1)
+        {
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+            var sql = "INSERT INTO appointment SET ?";
+            con.query(sql, req.body.appointment, function (err, result) {
+                res.json({res: "success"});
+            });
+        }
+    }
+});
+app.post('/admin/delete/appointment', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if(role!=1)
+        {
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+
+            var sql = "DELETE FROM appointment WHERE Ticket_Num=?";
+            con.query(sql, req.body.id, function (err, result) {
+                res.json({res: "success"});
+            });
+        }
+    }
+});
+app.post('/admin/edit/appointment', function (req, res) {
+    console.log("let`s edit ");
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        console.log(role);
+        if(role!=1)
+        {
+            console.log("not correct role");
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+            console.log("editing");
+            console.log(req.body.patient);
+            var sql = "UPDATE appointment SET ? WHERE Ticket_Num=?";
+            con.query(sql, [req.body.appointment,req.body.appointment.Ticket_Num], function (err, result) {
+                console.log("updated");
+                res.json({res: "success"});
+            });
+        }
+    }
+    else{
+        console.log("not authorised");
+    }
+});
+
+app.post('/admin/add/allergy', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if(role!=1)
+        {
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+            var sql = "INSERT INTO allergy SET ?";
+            con.query(sql, req.body.allergy, function (err, result) {
+                res.json({res: "success"});
+            });
+        }
+    }
+});
+app.post('/admin/delete/allergy', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if(role!=1)
+        {
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+
+            var sql = "DELETE FROM allergy WHERE Allergy_ID=?";
+            con.query(sql, req.body.id, function (err, result) {
+                res.json({res: "success"});
+            });
+        }
+    }
+});
+app.post('/admin/edit/allergy', function (req, res) {
+    console.log("let`s edit ");
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        console.log(role);
+        if(role!=1)
+        {
+            console.log("not correct role");
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+            console.log("editing");
+            console.log(req.body.patient);
+            var sql = "UPDATE allergy SET ? WHERE Allergy_ID=?";
+            con.query(sql, [req.body.allergy,req.body.allergy.Allergy_ID], function (err, result) {
+                console.log("updated");
+                res.json({res: "success"});
+            });
+        }
+    }
+    else{
+        console.log("not authorised");
+    }
+});
+
+app.post('/admin/add/diagnosys', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if(role!=1)
+        {
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+            var sql = "INSERT INTO diagnosys SET ?";
+            con.query(sql, req.body.diagnosys, function (err, result) {
+                res.json({res: "success"});
+            });
+        }
+    }
+});
+app.post('/admin/delete/diagnosys', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if(role!=1)
+        {
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+
+            var sql = "DELETE FROM diagnosys WHERE Diagnosys_ID=?";
+            con.query(sql, req.body.id, function (err, result) {
+                res.json({res: "success"});
+            });
+        }
+    }
+});
+app.post('/admin/edit/diagnosys', function (req, res) {
+    console.log("let`s edit ");
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        console.log(role);
+        if(role!=1)
+        {
+            console.log("not correct role");
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+            console.log("editing");
+            console.log(req.body.patient);
+            var sql = "UPDATE diagnosys SET ? WHERE Diagnosys_ID=?";
+            con.query(sql, [req.body.diagnosys,req.body.diagnosys.Diagnosys_ID], function (err, result) {
                 console.log("updated");
                 res.json({res: "success"});
             });
