@@ -9,13 +9,13 @@
         text-overflow: ellipsis;
         word-wrap: break-word;
     }
-
     table {
         table-layout: fixed;
     }
 </style>
 <div id="main" style="width: 100%">
     <button id="1" class="btn  btn-sm btn-primary" onclick="changeTableDisplay(this.id)">Таблиця пацієнтів</button>
+    <br>
     <% if(patients.length > 0){ %>
         <div class="table-responsive table-body">
             <table id="table1" style="width: 100%; overflow-x:hidden; font-size: smaller"
