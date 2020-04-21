@@ -34,10 +34,14 @@ app.get('/', (req, res) => {
 });
 
 app.get('/admin', (req, res) => {
+    res.render('admin');
+});
+
+app.get('/admin/patient_table', (req, res) => {
     var sql = "Select * FROM `patient`";
     con.query(sql, function (err, result) {
         substringDate(result);
-        res.render('admin_view',{"patients": result});
+        res.render('admin_view_patient',{"patients": result});
     });
 
 });
@@ -131,6 +135,7 @@ app.post('/register', function (req, res) {
         });
 });
 
+
 app.post('/login', function (req, res) {
     let usern = req.body.usernameL;
     var sql = "SELECT * FROM user WHERE Username=?";
@@ -152,9 +157,11 @@ app.post('/login', function (req, res) {
                 }
                 console.log("Password matches");
                 if (result[0].Patient_ID == null && result[0].Doctor_ID == null) {
-                    let user = {role: 1};
+                    let user = {role: 1, id: -1};
                     const token = jwt.sign(user, Secret, jwt.HS256);
-                    //TODO render admin view
+                    res.render('admin', {
+                        "token": token
+                    });
                 } else if (result[0].Patient_ID == null) {
                     let user = {role: 2, id: result[0].Doctor_ID};
                     const token = jwt.sign(user, Secret);
@@ -193,8 +200,9 @@ app.get('/delete/(:table)/(:id)', function (req, res) {
 
 function substringDate(result) {
     for(let i=0; i<result.length;++i){
-        let data = "" + result[i].Patient_Birthdate;
-        result[i].Patient_Birthdate = data.substring(0, 15);
+        result[i].Patient_Birthdate = ("" + result[i].Patient_Birthdate).substring(0, 15);
+        result[i].Diagnosys_StartDate = ("" + result[i].Diagnosys_StartDate).substring(0, 15);
+        result[i].Diagnosys_EndDate = ("" + result[i].Diagnosys_EndDate).substring(0, 15);
     }
 }
 
@@ -304,5 +312,55 @@ app.get("/patient/my_appointments", function (req, res) {
                 "appointments": result
             });
         });
+    }
+});
+
+
+app.post('/admin/add/patient', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if(role!=1)
+        {
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+            var sql = "INSERT INTO patient SET ?";
+            con.query(sql, req.body.patient, function (err, result) {
+                res.json({res: "success"});
+            });
+        }
+    }
+});
+app.post('/admin/delete/patient', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if(role!=1)
+        {
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+            var sql = "DELETE FROM patient WHERE Patient_ID=?";
+            con.query(sql, req.body.id, function (err, result) {
+                res.json({res: "success"});
+            });
+        }
+    }
+});
+app.post('/admin/edit/patient', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if(role!=1)
+        {
+            res.json({response:"Fail. No rights to delete"});
+        }
+        else {
+            var sql = "UPDATE patient SET ? WHERE Patient_ID=?";
+            con.query(sql, [req.body.patient,req.body.patient.id], function (err, result) {
+                res.json({res: "success"});
+            });
+        }
     }
 });

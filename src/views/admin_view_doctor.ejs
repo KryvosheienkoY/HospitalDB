@@ -1,7 +1,9 @@
-<html>
-<%- include('head'); %>
+<!--<html>-->
+
 <body>
-<%- include('toolbar_admin_view'); %>
+<%- include('head'); %>
+<%- include('toolbar_admin_view',{section: ''}); %>
+<script src="js/basic_table_functions.js"></script>
 <script src="js/table.js"></script>
 <style type="text/css">
     td {
@@ -9,14 +11,14 @@
         text-overflow: ellipsis;
         word-wrap: break-word;
     }
+
     table {
         table-layout: fixed;
     }
 </style>
 <div id="main" style="width: 100%">
-    <button id="1" class="btn  btn-sm btn-primary" onclick="changeTableDisplay(this.id)">Таблиця пацієнтів</button>
     <br>
-    <% if(patients.length > 0){ %>
+    <% if(doctors.length > 0){ %>
         <div class="table-responsive table-body">
             <table id="table1" style="width: 100%; overflow-x:hidden; font-size: smaller"
                    class="table table-striped table-responsive-sm btn-table"
@@ -41,34 +43,34 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% for (let i = 0; i < patients.length; i++) { %>
-                    <tr>
-                        <td><%= patients[i].Patient_ID %></td>
-                        <td><%= patients[i].Patient_Surname %></td>
-                        <td><%= patients[i].Patient_Firstname %></td>
-                        <td><%= patients[i].Patient_City %></td>
-                        <td><%= patients[i].Patient_Street %></td>
-                        <td><%= patients[i].Patient_Building %></td>
-                        <td><%= patients[i].Patient_Apt %></td>
-                        <td><%= patients[i].Patient_Index %></td>
-                        <td><%= patients[i].Patient_PhoneN %></td>
-                        <td><%= patients[i].Patient_BloodType %></td>
-                        <td><%= patients[i].Patient_Rhesus %></td>
-                        <td><%= patients[i].Patient_Birthdate %></td>
-                        <td><%= patients[i].Patient_eAddress %></td>
-                        <td><%= patients[i].Patient_Notes %></td>
+                <% for (let i = 0; i < doctors.length; i++) { %>
+                    <tr id="<%= i %>">
+                        <td><%= doctors[i].Patient_ID %></td>
+                        <td><%= doctors[i].Patient_Surname %></td>
+                        <td><%= doctors[i].Patient_Firstname %></td>
+                        <td><%= doctors[i].Patient_City %></td>
+                        <td><%= doctors[i].Patient_Street %></td>
+                        <td><%= doctors[i].Patient_Building %></td>
+                        <td><%= doctors[i].Patient_Apt %></td>
+                        <td><%= doctors[i].Patient_Index %></td>
+                        <td><%= doctors[i].Patient_PhoneN %></td>
+                        <td><%= doctors[i].Patient_BloodType %></td>
+                        <td><%= doctors[i].Patient_Rhesus %></td>
+                        <td><%= doctors[i].Patient_Birthdate %></td>
+                        <td><%= doctors[i].Patient_eAddress %></td>
+                        <td><%= doctors[i].Patient_Notes %></td>
                         <td name="buttons">
                             <div class="btn-group pull-right">
-                                <button id="bEdit1<%= i %>" type="button" class="btn btn-sm btn-default"
+                                <button id="bEdit<%= i %>" type="button" class="btn btn-sm btn-default"
                                         onclick="rowEdit(this);"><i
                                             class="fas fa-pencil-alt"> </i></button>
-                                <button id="bEdit1<%= i %>" type="button" class="btn btn-sm btn-default"
+                                <button id="bEdit<%= i %>" type="button" class="btn btn-sm btn-default"
                                         onclick="rowDelete(this);"><i
                                             class="fas fa-trash"> </i></button>
-                                <button id="bAcep1<%= i %>" type="button" class="btn btn-sm btn-default"
+                                <button id="bAcep<%= i %>" type="button" class="btn btn-sm btn-default"
                                         style="display:none;"
                                         onclick="rowAcep(this);"><i class="fas fa-check-circle"> </i></button>
-                                <button id="bCanc1<%= i %>" type="button" class="btn btn-sm btn-default"
+                                <button id="bCanc<%= i %>" type="button" class="btn btn-sm btn-default"
                                         style="display:none;"
                                         onclick="rowCancel(this);"><i class="fas fa-window-close"> </i></button>
                             </div>
@@ -78,7 +80,12 @@
                 </tbody>
             </table>
         </div>
+    <% } else { %>
+        <p>Table is empty</p>
     <% } %>
 </div>
+<script>
+    $('#table1').SetEditable("2,3,4,5,6,7,8,9,10,11,12,13");
+</script>
 </body>
-</html>
+<!--</html>-->

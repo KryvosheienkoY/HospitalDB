@@ -1,8 +1,8 @@
-<html>
-<%- include('head'); %>
+<!--<html>-->
+<!--<ф%- include('head'); %ф>-->
 <body>
+<%- include('head'); %>
 <%- include('toolbar_patient_view', {section: 'main'}); %>
-
 <% if(appointments.length > 0){ %>
     <table id="tableAppointments" class="table table-striped table-responsive-md btn-table"
            style="max-width: 100%; margin: 15px;width: auto;">
@@ -17,9 +17,7 @@
             <th>Дата вилікування діагнозу</th>
             <th>Presc_Instruction</th>
             <th>Medicine_Name</th>
-            <!--<th> Medicine_Type</th>-->
-            <!--<th>Presc_Required</th>-->
-            <!--<th> Medical_Form</th>-->
+
         </tr>
         </thead>
         <tbody>
@@ -47,4 +45,4 @@
 <% } %>
 
 </body>
-</html>
+<!--</html>-->

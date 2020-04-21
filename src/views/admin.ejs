@@ -1,0 +1,26 @@
+<html>
+<%- include('head'); %>
+<body>
+<%- include('toolbar_admin_view',{section: 'admin'}); %>
+
+<div>
+    <button class="btn  btn-sm btn-primary" onclick="sendAjaxPatientTable()">Таблиця пацієнтів</button>
+
+</div>
+<script>
+    function sendAjaxPatientTable(){
+
+        console.log("token -" + sessionStorage.getItem('token'));
+        $.ajax({
+            type: 'GET',
+            headers: {Authorization: sessionStorage.getItem("token")},
+            url: '/admin/patient_table',
+            success: function (response) {
+                console.log("/admin/patient_table");
+                $("body").html(response);
+            }
+        });
+    }
+</script>
+</body>
+</html>

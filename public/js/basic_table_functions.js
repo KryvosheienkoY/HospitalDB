@@ -1,18 +1,13 @@
-/*
-Bootstable
- @description  Javascript library to make HMTL tables editable, using Bootstrap
- @version 1.1
- @autor Tito Hinostroza
-*/
+
 "use strict";
 //Global variables
 let params = null;  		//Parameters
 let colsEdi = null;
 let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 let phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-$.fn.SetEditable = function (options) {
+$.fn.SetEditable = function (cols,options) {
     let defaults = {
-        columnsEd: "13",         //Index to editable columns. If null all td editables. Ex.: "1,2,3,4,5"
+        columnsEd: cols,         //Index to editable columns. If null all td editables. Ex.: "1,2,3,4,5"
         $addButton: null,        //Jquery object of "Add" button
         onEdit: function () {
             console.log("edited")
@@ -25,7 +20,6 @@ $.fn.SetEditable = function (options) {
         }     //Called when added a new row
     };
     params = $.extend(defaults, options);
-
 
     let $tabedi = this;   //Read reference to the current table, to resolve "this" here.
     //Process "addButton" parameter
@@ -78,7 +72,8 @@ function FijModoNormal(id) {
     $(bd).show();
 
     let row = $('#' + id).closest('tr');
-    row.attr('id', '');  //quita marca
+    let idd= row.attr('id')+"editing".replace(/\D/g, "");
+    row.attr('id', idd);  //quita marca
 }
 
 function FijModoEdit(id) {
@@ -92,44 +87,18 @@ function FijModoEdit(id) {
     $(be).hide();
     $(bd).hide();
     let row = $('#' + id).closest('tr');
-    row.attr('id', 'editing');
+    let idd= row.attr('id')+"editing";
+    row.attr('id', idd);
 }
 
 function ModoEdicion($row) {
-    if ($row.attr('id') == 'editing') {
+    if ($row.attr('id').replace(/[0-9]/g, '') == 'editing') {
         return true;
     } else {
         return false;
     }
 }
 
-function rowAcep(but) {
-//Acepta los cambios de la edición
-    let $row = $(but).parents('tr');  //accede a la fila
-    let $cols = $row.find('td');  //lee campos
-    if (!ModoEdicion($row)) return;  //Ya está en edición
-    //Está en edición. Hay que finalizar la edición
-    let failed = false;
-    IterarCamposEdit($cols, function ($td) {  //itera por la columnas
-        let cont = $td.find('input').val();
-        let i = but.id.replace(/\D/g, "");
-        if (!((i === '7' && !phoneRegex.test(cont)) || (i === '8' && !emailRegex.test(cont)))) {
-            $td.html(cont);
-        }
-        else {
-            failed = true;
-            return;
-        }
-        //lee contenido del input
-        //fija contenido y Deleteina controles
-    });
-    if (!failed) {
-        FijModoNormal(but.id);
-        params.onEdit($row);
-        console.log("row accepted - " + but.id);
-        requestToEditPatientBD(but.id);
-    }
-}
 
 function rowCancel(but) {
 //Rechaza los cambios de la edición
@@ -142,81 +111,6 @@ function rowCancel(but) {
         $td.html(cont);  //fija contenido y Deleteina controles
     });
     FijModoNormal(but.id);
-}
-
-function requestToEditPatientBD(btnid) {
-    let id = btnid.replace(/\D/g, "");
-    let idTd = "#td" + id;
-    console.log('tdId - ' + idTd);
-    let newData = $(idTd).html();
-    console.log("newdata - " + newData);
-    let editedField;
-    console.log("id - " + id);
-    switch (id) {
-        case '1':
-            editedField = "Patient_Surname";
-            break;
-        case '2':
-            editedField = "Patient_Street";
-            break;
-        case '3':
-            editedField = "Patient_City";
-            break;
-        case '4':
-            editedField = "Patient_Building";
-            break;
-        case '5':
-            editedField = "Patient_Apt";
-            break;
-        case '6':
-            editedField = "Patient_Index";
-            break;
-        case '7':
-            editedField = "Patient_PhoneN";
-            break;
-        case '8':
-            editedField = "Patient_eAddress";
-            break;
-        default:
-            console.log("error id");
-            return;
-
-    }
-    let dat = "{" + editedField + ": " + newData + "}";
-    console.log("for ajax - " + dat);
-    let url;
-    $.ajax({
-        type: 'Post',
-        data: dat,
-        url: url,
-        success: function (response) {
-            console.log("success of edit my profile of patient");
-        }
-    });
-}
-
-function rowEdit(but) {  //Inicia la edición de una fila
-    let $row = $(but).parents('tr');  //accede a la fila
-    let $cols = $row.find('td');  //lee campos
-    if (ModoEdicion($row)) return;  //Ya está en edición
-    //Pone en modo de edición
-    IterarCamposEdit($cols, function ($td) {  //itera por la columnas
-        let cont = $td.html(); //lee contenido
-        let div = '<div style="display: none;">' + cont + '</div>';  //guarda contenido
-        let input;
-        // if (but.id === 'bEdit7') {
-        //     input = '<input  type="tel" pattern="[0-9]{10}" class="form-control input-sm"  value="' + cont + '">';
-        // }
-        // else if (but.id === 'bEdit8') {
-        //     input = '<input  type="email" class="form-control input-sm"  value="' + cont + '">';
-        // }
-        // else {
-            input = '<input class="form-control input-sm"  value="' + cont + '">';
-        // }
-
-        $td.html(div + input);  //fija contenido
-    });
-    FijModoEdit(but.id);
 }
 
 function rowDelete(but) {  //Deleteina la fila actual
@@ -286,3 +180,5 @@ function TableToCSV(tabId, separator) {  //Convierte tabla a CSV
     });
     return tmp;
 }
+
+

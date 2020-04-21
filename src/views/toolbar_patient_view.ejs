@@ -40,8 +40,8 @@
                 url: '/patient/my_profile',
                 success: function (response) {
                     console.log("success of /patient/my_profile/");
-                    $("html").html(response);
-                    window.history.pushState("", "", "localhost:8080/patient/my_profile");
+                    $("body").html(response);
+                   // window.history.pushState("", "", "localhost:8080/patient/my_profile");
                 }
             });
         });
@@ -54,7 +54,7 @@
                 url: '/patient/my_appointments',
                 success: function (response) {
                     console.log("success of /patient/my_appointments/");
-                    $("html").html(response);
+                    $("body").html(response);
                 }
             });
         });
