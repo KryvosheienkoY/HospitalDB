@@ -315,6 +315,20 @@ app.get("/patient/my_appointments", function (req, res) {
     }
 });
 
+app.post("/patient/edit", function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        var auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        let sql = "UPDATE patient SET ? WHERE Patient_ID=?";
+        let field ="{"+req.body.editedField+":"+req.body.newValue+"}";
+        con.query(sql, [field, id], function (err, result) {
+            if (err) console.log(err);
+            console.log(result[0]);
+            substringDate(result);
+
+        });
+    }
+});
 
 app.post('/admin/add/patient', function (req, res) {
     if (req.headers && req.headers.authorization) {
@@ -360,6 +374,7 @@ app.post('/admin/edit/patient', function (req, res) {
         else {
             var sql = "UPDATE patient SET ? WHERE Patient_ID=?";
             con.query(sql, [req.body.patient,req.body.patient.id], function (err, result) {
+                console.log("updated");
                 res.json({res: "success"});
             });
         }

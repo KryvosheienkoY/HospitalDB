@@ -25,7 +25,7 @@ function requestToEditPatientBD(btnid) {
 function rowEdit(but) {  //Inicia la edición de una fila
     let $row = $(but).parents('tr');  //accede a la fila
     let $cols = $row.find('td');  //lee campos
-    if (ModoEdicion($row)) return;  //Ya está en edición
+   // if (ModoEdicion($row)) return;  //Ya está en edición
     //Pone en modo de edición
     IterarCamposEdit($cols, function ($td) {  //itera por la columnas
         let cont = $td.html(); //lee contenido
@@ -40,7 +40,7 @@ function rowEdit(but) {  //Inicia la edición de una fila
 function rowAcep(but) {
     let $row = $(but).parents('tr');
     let $cols = $row.find('td');
-    if (!ModoEdicion($row)) return;
+     if (!ModoEdicion($row)) return;
     let failed = false;
     IterarCamposEdit($cols, function ($td) {
         let cont = $td.find('input').val();
@@ -72,4 +72,16 @@ function rowDelete(but) {
     $row.remove();
     // params.onDelete();
 
+}
+function rowCancel(but) {
+//Rechaza los cambios de la edición
+    let $row = $(but).parents('tr');  //accede a la fila
+    let $cols = $row.find('td');  //lee campos
+    if (!ModoEdicion($row)) return;  //Ya está en edición
+    //Está en edición. Hay que finalizar la edición
+    IterarCamposEdit($cols, function ($td) {  //itera por la columnas
+        let cont = $td.find('div').html(); //lee contenido del div
+        $td.html(cont);  //fija contenido y Deleteina controles
+    });
+    FijModoNormal(but.id);
 }
