@@ -108,6 +108,7 @@ app.get("/doctor/my_appointments", function (req, res) {
                     console.log("rendering doctor_myprofile_view");
                     console.log(appointments);
                     // console.log("id - "+appointments);
+                    substringDate(appointments);
                     res.render("doctor_myappointments_view", {
                         appointments: appointments,
                         medicine:medicine,
@@ -379,12 +380,12 @@ app.get('/delete/(:table)/(:id)', function (req, res) {
 
 function substringDate(result) {
     for (let i = 0; i < result.length; ++i) {
-        result[i].Patient_Birthdate = ("" + result[i].Patient_Birthdate).substring(0, 15);
-        result[i].Diagnosys_StartDate = ("" + result[i].Diagnosys_StartDate).substring(0, 15);
-        result[i].Diagnosys_EndDate = ("" + result[i].Diagnosys_EndDate).substring(0, 15);
-        result[i].Workday_StartTime = ("" + result[i].Diagnosys_EndDate).substring(0, 15);
-        result[i].Workday_EndTime = ("" + result[i].Diagnosys_EndDate).substring(0, 15);
-        result[i].Appointment_Date = ("" + result[i].Appointment_Date).substring(0, 15);
+        result[i].Patient_Birthdate = ("" + result[i].Patient_Birthdate).substring(4, 15);
+        result[i].Diagnosys_StartDate = ("" + result[i].Diagnosys_StartDate).substring(4, 15);
+        result[i].Diagnosys_EndDate = ("" + result[i].Diagnosys_EndDate).substring(4, 15);
+        result[i].Workday_StartTime = ("" + result[i].Diagnosys_EndDate).substring(4, 15);
+        result[i].Workday_EndTime = ("" + result[i].Diagnosys_EndDate).substring(4, 15);
+        result[i].Appointment_Date = ("" + result[i].Appointment_Date).substring(4, 15);
     }
 }
 

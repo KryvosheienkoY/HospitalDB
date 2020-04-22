@@ -59,7 +59,7 @@
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu dropdownPatients">
                             <% for (let i = 0; i < patients.length; i++) { %>
-                                <li><a href="#"
+                                <li><a href="#s"
                                        id_val="<%= patients[i].Patient_ID %>"><%= patients[i].Patient_Surname %></a>
                                 </li>
                             <% } %>
@@ -84,7 +84,7 @@
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu dropdownMedicine">
                             <% for (let i = 0; i < medicine.length; i++) { %>
-                                <li><a href="#"
+                                <li><a href="#s"
                                        id_val="<%= medicine[i].Medicine_ID %>"><%= medicine[i].Medicine_Name %></a>
                                 </li>
                             <% } %>
@@ -126,4 +126,5 @@
         $('#selectedPatient').attr('id_val', selId);
     });
 </script>
+
 </body>
