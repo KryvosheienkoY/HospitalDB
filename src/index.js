@@ -111,10 +111,26 @@ app.get("/doctor/my_appointments", function (req, res) {
                     res.render("doctor_myappointments_view", {
                         appointments: appointments,
                         medicine:medicine,
-                        patients: []
+                        patients: patients
                     });
                 });
             });
+        });
+    }
+});
+app.get('/doctor/patients', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        let auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if (role != 2) {
+            res.json({response: "Fail. No rights to delete"});
+        }
+
+        let sql = "SELECT Patient_ID, Patient_Surname, Patient_Firstname, Patient_Patronymic, Patient_PhoneN FROM patient";
+        con.query(sql, function (e, patients) {
+
+            // res.json({patients : patients});
+            res.render('doctor_patient_view',{patients : patients});
         });
     }
 });
@@ -126,9 +142,27 @@ app.get('/doctor/allergy_Patients', function (req, res) {
         if (role != 2) {
             res.json({response: "Fail. No rights to delete"});
         }
-        let sql2 = "SELECT Allergy_Name FROM allergy WHERE Allergy_ID IN(SELECT Allergy_ID FROM patientallergy WHERE Patient_ID=?)";
-        con.query(sql2, req.body.Patient_ID, function (e, allergies) {
-            res.json({allergies: allergies});
+        let sql1 = "SELECT Count(Distinct Allergy_ID) AS counter FROM patientallergy WHERE Patient_ID=?)";
+        con.query(sql1, req.body.Patient_ID, function (e, count) {
+            let sql2 = "SELECT Allergy_Name FROM allergy WHERE Allergy_ID IN(SELECT Allergy_ID FROM patientallergy WHERE Patient_ID=?)";
+            con.query(sql2, req.body.Patient_ID, function (e, allergies) {
+                let str;
+
+                console.log("body - ");
+                console.log(req.body);
+                console.log("patient id - " +req.body.Patient_ID);
+                console.log("patient allergies - ");
+                console.log(allergies);
+                for (let i=0; i<allergies.length; i++)
+                {
+                    if(i>0)
+                    {
+                        str+=", ";
+                    }
+                    str+=allergies[i].Allergy_Name;
+                }
+                res.json({ allergies: str, num : count[0].counter});
+            });
         });
     }
 });

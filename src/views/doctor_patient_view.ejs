@@ -1,4 +1,5 @@
 <body>
+<script src="js/table_doctor_patient.js"></script>
 <%- include('head'); %>
 <%- include('toolbar_doctor_view', {section: 'main'}); %>
 <div class="table-responsive table-body">
@@ -11,7 +12,6 @@
                 <th>Ім'я</th>
                 <th>По-батькові</th>
                 <th>Номер телефону</th>
-                <th>Алергії</th>
             </tr>
             </thead>
             <tbody>
@@ -21,7 +21,6 @@
                     <td><%= patients[i].Patient_FirstName %></td>
                     <td><%= patients[i].Patient_Patronymic %></td>
                     <td><%= patients[i].Patient_PhoneN %></td>
-                    <td><%= patients[i].allergies %></td>
                 </tr>
             <% } %>
             </tbody>
@@ -41,10 +40,10 @@
         <tr>
             <td>
                 <div class="btn-group">
-                    <a id_val="53" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"
-                       id="selectedPatient">Пацієнт
+                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"
+                       id="selectedPatientD">Пацієнт
                         <span class="caret"></span></a>
-                    <ul class="dropdown-menu dropdownPatients">
+                    <ul class="dropdown-menu dropdownPatientsD">
                         <% for (let i = 0; i < patients.length; i++) { %>
                             <li><a href="#"
                                    id_val="<%= patients[i].Patient_ID %>"><%= patients[i].Patient_Surname %></a>
