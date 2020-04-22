@@ -1,15 +1,14 @@
 <body>
 <%- include('head'); %>
-<%- include('toolbar_patient_view', {section: 'main'}); %>
+<%- include('toolbar_doctor_view', {section: 'main'}); %>
 <% if(appointments.length > 0){ %>
-    <table id="tableAppointments" class="table table-striped table-responsive-md btn-table"
+    <table id="tableDoctorAppointments" class="table table-striped table-responsive-md btn-table"
            style="max-width: 100%; margin: 15px;width: auto;">
         <thead>
         <tr>
             <th>Номер</th>
             <th>Дата прийому</th>
-            <th>Лікар</th>
-            <th>Відділення</th>
+            <th>Пацієнт</th>
             <th>Діагноз</th>
             <th>Дата встановлення діагнозу</th>
             <th>Дата вилікування діагнозу</th>
@@ -23,8 +22,7 @@
             <tr>
                 <td><%= appointments[i].Ticket_Num %></td>
                 <td><%= appointments[i].Appointment_Date %></td>
-                <td><%= appointments[i].Doctor_Surname %></td>
-                <td><%= appointments[i].Department_Name %></td>
+                <td><%= appointments[i].Patient_Surname %></td>
                 <td><%= appointments[i].Diagnosys_Name %></td>
                 <td><%= appointments[i].Diagnosys_StartDate %></td>
                 <td><%= appointments[i].Diagnosys_EndDate %></td>

@@ -1,28 +1,32 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark">
     <a class="navbar-brand" style="color:#ffcc04">Система обліку пацієнтів</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#D_navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="nav navbar-nav">
             <li class="nav-item <%= section === 'main' ? '' : 'active' %>">
-                <a class="nav-link" href="/patient/">Головна</a>
+                <a class="nav-link" href="/doctor/">Головна</a>
             </li>
             <li class="nav-item <%= section === 'our_departments' ? '' : 'active' %>">
-                <a class="nav-link" href="/patient/our_departments">Наші відділення</a>
+                <a class="nav-link" href="/doctor/our_departments">Наші відділення</a>
             </li>
             <li class="nav-item <%= section === 'my_profile' ? '' : 'active' %>">
-                <a class="nav-link" href="/patient/my_profile" id="myprofileID">Мій профіль</a>
+                <a class="nav-link" href="/doctor/my_profile" id="D_myprofileID">Мій профіль</a>
             </li>
             <li class="nav-item <%= section === 'my_appointments' ? '' : 'active' %>">
-                <a class="nav-link" href="/patient/my_appointments" id="myappointmentsID">Мої прийоми</a>
+                <a class="nav-link" href="/doctor/my_appointments" id="D_myappointmentsID">Мої прийоми</a>
+
+            </li>
+            <li class="nav-item <%= section === 'my_patients' ? '' : 'active' %>">
+                <a class="nav-link" href="/doctor/my_patients" id="D_my_patientsID">Мої пацієнти</a>
             </li>
         </ul>
 
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item" id="loginAid">
-                <a class="nav-link trigger-btn" href="#Logout" data-toggle="modal"
-                   data-target="#modalLoginForm">Logout</a>
+                <a class="nav-link trigger-btn" href="#D_Logout" data-toggle="modal"
+                   data-target="#D_modalLoginForm">Logout</a>
             </li>
         </ul>
     </div>
@@ -31,28 +35,42 @@
 <script>
     $(document).ready(function () {
         console.log("&&&&&&&&&token -" + sessionStorage.getItem('token'));
-        $('#myprofileID').on('click', function (e) {
+        $('#D_myprofileID').on('click', function (e) {
             e.preventDefault();
             console.log("token -" + sessionStorage.getItem('token'));
             $.ajax({
                 type: 'GET',
                 headers: {Authorization: sessionStorage.getItem("token")},
-                url: '/patient/my_profile',
+                url: '/doctor/my_profile',
                 success: function (response) {
-                    console.log("success of /patient/my_profile/");
+                    console.log("success of /doctor/my_profile/");
                     $("body").html(response);
                 }
             });
         });
-        $('#myappointmentsID').on('click', function (e) {
+        $('#D_myappointmentsID').on('click', function (e) {
             e.preventDefault();
             console.log("token -" + sessionStorage.getItem('token'));
             $.ajax({
                 type: 'GET',
                 headers: {Authorization: sessionStorage.getItem("token")},
-                url: '/patient/my_appointments',
+                url: '/doctor/my_appointments',
                 success: function (response) {
-                    console.log("success of /patient/my_appointments/");
+                    console.log("success of /doctor/my_appointments/");
+                    $("body").html(response);
+                }
+            });
+        });
+
+        $('#D_mypatientsID').on('click', function (e) {
+            e.preventDefault();
+            console.log("token -" + sessionStorage.getItem('token'));
+            $.ajax({
+                type: 'GET',
+                headers: {Authorization: sessionStorage.getItem("token")},
+                url: '/doctor/my_patients',
+                success: function (response) {
+                    console.log("success of /doctor/my_patients/");
                     $("body").html(response);
                 }
             });

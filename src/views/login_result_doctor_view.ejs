@@ -1,7 +1,7 @@
 <html>
 <%- include('head'); %>
 <body>
-<%- include('toolbar_patient_view', {section: 'main'}); %>
+<%- include('toolbar_doctor_view', {section: 'main'}); %>
 <div style="text-align: center; width: 100%; height: 100%">
     <p style="color:green; margin-top: 20%; font-size: xx-large"><strong><%= result %>!</strong></p>
 </div>
@@ -10,7 +10,7 @@
 <script>
     $(document).ready(function () {
         let t=$('#getID').html();
-       sessionStorage.setItem('token',t);
+        sessionStorage.setItem('token',t);
     });
 </script>
 </html>
