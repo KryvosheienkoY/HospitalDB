@@ -100,13 +100,13 @@ app.get("/doctor/my_appointments", function (req, res) {
         console.log("id"+id);
         let sql = "SELECT Medicine_ID, Medicine_Name FROM medicine";
         con.query(sql, id, function (er, medicine) {
-            let sql1 = "SELECT Patient_Surname, Patient_Firstname, Patient_Patronymic, appointment.Ticket_Num, Appointment_Date, Diagnosys_Name, Diagnosys_StartDate, Diagnosys_EndDate,Presc_Instruction, Medicine_Name FROM appointment INNER JOIN patient ON patient.Patient_ID=appointment.Patient_ID LEFT OUTER JOIN diagnosting on appointment.Ticket_Num=diagnosting.Ticket_Num LEFT OUTER JOIN diagnosys ON diagnosys.Diagnosys_ID=diagnosting.Diagnosys_ID LEFT OUTER JOIN prescription ON diagnosys.Diagnosys_ID=prescription.Diagnosys_ID LEFT OUTER JOIN prescribed ON prescribed.Prescription_ID=prescription.Prescription_ID LEFT OUTER JOIN medicine ON medicine.Medicine_ID=prescribed.Medicine_ID WHERE Doctor_ID=?";
+            let sql1 = "SELECT patient.Patient_ID, Patient_Surname, Patient_Firstname, Patient_Patronymic, appointment.Ticket_Num, Appointment_Date, Diagnosys_Name, Diagnosys_StartDate, Diagnosys_EndDate,Presc_Instruction, Medicine_Name FROM appointment INNER JOIN patient ON patient.Patient_ID=appointment.Patient_ID LEFT OUTER JOIN diagnosting on appointment.Ticket_Num=diagnosting.Ticket_Num LEFT OUTER JOIN diagnosys ON diagnosys.Diagnosys_ID=diagnosting.Diagnosys_ID LEFT OUTER JOIN prescription ON diagnosys.Diagnosys_ID=prescription.Diagnosys_ID LEFT OUTER JOIN prescribed ON prescribed.Prescription_ID=prescription.Prescription_ID LEFT OUTER JOIN medicine ON medicine.Medicine_ID=prescribed.Medicine_ID WHERE Doctor_ID=?";
             con.query(sql1, id, function (er, appointments) {
-                let sql2 = "SELECT Patient_ID, Patient_Surname, Patient_Firstname, Patient_Patronymic,Patient_Phone_N FROM patient WHERE Patient_ID IN (SELECT Patient_ID FROM appointment WHERE Doctor_ID=?)";
+                let sql2 = "SELECT * FROM patient";
                 con.query(sql2, id, function (e, patients) {
-
+                    console.log(patients);
                     console.log("rendering doctor_myprofile_view");
-                     console.log(appointments);
+                    console.log(appointments);
                     // console.log("id - "+appointments);
                     res.render("doctor_myappointments_view", {
                         appointments: appointments,
@@ -118,6 +118,7 @@ app.get("/doctor/my_appointments", function (req, res) {
         });
     }
 });
+
 app.get('/doctor/patients', function (req, res) {
     if (req.headers && req.headers.authorization) {
         let auth = req.headers.authorization;
@@ -130,42 +131,46 @@ app.get('/doctor/patients', function (req, res) {
         con.query(sql, function (e, patients) {
 
             // res.json({patients : patients});
-            res.render('doctor_patient_view',{patients : patients});
+            res.render('doctor_patient_view', {patients: patients});
         });
     }
 });
 
-app.get('/doctor/allergy_Patients', function (req, res) {
+app.post('/doctor/allergy_Patients', function (req, res) {
     if (req.headers && req.headers.authorization) {
         let auth = req.headers.authorization;
         let {role, id} = jwt.verify(auth, Secret);
         if (role != 2) {
             res.json({response: "Fail. No rights to delete"});
         }
-        let sql1 = "SELECT Count(Distinct Allergy_ID) AS counter FROM patientallergy WHERE Patient_ID=?)";
-        con.query(sql1, req.body.Patient_ID, function (e, count) {
+        let sql1 = "SELECT Count(Distinct Allergy_ID) AS counter FROM patientallergy WHERE Patient_ID=?";
+        con.query(sql1, req.body.info.Patient_ID, function (e, count) {
             let sql2 = "SELECT Allergy_Name FROM allergy WHERE Allergy_ID IN(SELECT Allergy_ID FROM patientallergy WHERE Patient_ID=?)";
-            con.query(sql2, req.body.Patient_ID, function (e, allergies) {
-                let str;
+            con.query(sql2, req.body.info.Patient_ID, function (e, allergies) {
+                let str="";
 
-                console.log("body - ");
-                console.log(req.body);
-                console.log("patient id - " +req.body.Patient_ID);
+                console.log("count - ");
+                console.log(count);
+
+                console.log("count counter");
+                console.log(count.counter);
+
+                console.log("patient id - " +req.body.info.Patient_ID);
                 console.log("patient allergies - ");
                 console.log(allergies);
                 for (let i=0; i<allergies.length; i++)
                 {
-                    if(i>0)
-                    {
+                    str+=allergies[i].Allergy_Name;
+                    if(i<allergies.length-1){
                         str+=", ";
                     }
-                    str+=allergies[i].Allergy_Name;
                 }
-                res.json({ allergies: str, num : count[0].counter});
+                res.json({ allergies: str, num : count});
             });
         });
     }
 });
+
 
 app.post('/doctor/add/appointment', function (req, res) {
     if (req.headers && req.headers.authorization) {
@@ -177,40 +182,39 @@ app.post('/doctor/add/appointment', function (req, res) {
         else {
             let sql = "INSERT INTO appointment SET ?";
             con.query(sql, {
-                Appointment_Date: req.body.appointment.Appointment_Date, Doctor_ID : id, Patient_ID:  req.body.appointment.Patient_ID
+                Appointment_Date: req.body.appointment.Appointment_Date,
+                Doctor_ID: id,
+                Patient_ID: req.body.appointment.Patient_ID
             }, function (err, result) {
                 let appoint_id = result.insertId;
                 let sql1 = "INSERT INTO diagnosys SET ?";
                 con.query(sql1, {
-                    Diagnosys_Name:  req.body.appointment.Diagnosys_Name, Diagnosys_StartDate: req.body.appointment.Diagnosys_StartDate, Diagnosys_EndDate: req.body.appointment.Diagnosys_EndDate,
+                    Diagnosys_Name: req.body.appointment.Diagnosys_Name,
+                    Diagnosys_StartDate: req.body.appointment.Diagnosys_StartDate,
+                    Diagnosys_EndDate: req.body.appointment.Diagnosys_EndDate,
 
                 }, function (err, resul) {
-                    let diagnosys_id=resul.insertId;
+                    let diagnosys_id = resul.insertId;
                     let sql2 = "INSERT INTO diagnosed SET ?";
                     con.query(sql2, {
-                        Ticket_Num: appoint_id, Diagnosys_ID : diagnosys_id
+                        Ticket_Num: appoint_id, Diagnosys_ID: diagnosys_id
                     }, function (err, resu) {
                         let sql3 = "INSERT INTO prescription SET ?";
                         con.query(sql3, {
-                            Presc_Instruction: req.body.appointment.Presc_Instruction, Diagnosys_ID : diagnosys_id
+                            Presc_Instruction: req.body.appointment.Presc_Instruction, Diagnosys_ID: diagnosys_id
                         }, function (err, re) {
-                            let presc_id=re.insertId;
+                            let presc_id = re.insertId;
                             let sql4 = "INSERT INTO prescribed SET ?";
                             con.query(sql4, {
-                                Medicine_ID: req.body.appointment.Medicine_ID, Prescription_ID : presc_id
+                                Medicine_ID: req.body.appointment.Medicine_ID, Prescription_ID: presc_id
                             }, function (err, r) {
 
                                 res.json({res: "success"});
                             });
                         });
-
-                        res.json({res: "success"});
                     });
-
                 });
-
             });
-
         }
     }
 });

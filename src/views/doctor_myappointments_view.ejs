@@ -3,7 +3,7 @@
 <!--<link rel="stylesheet" href="styles/admin_tables_styles.css" type="text/css">-->
 <style type="text/css">
     .dropdown-menu {
-        transform: translate3d(5px, 35px, 0px) !important;
+        /*transform: translate3d(5px, 35px, 0px) !important;*/
     }
 </style>
 <%- include('head'); %>
@@ -11,7 +11,7 @@
 <div class="table-responsive table-body">
     <% if(appointments.length > 0){ %>
         <table id="tableDoctorAppointments" class="table table-striped table-responsive-md btn-table"
-               style="width: 100%; overflow-x:hidden; font-size: smaller">
+               style="height:80%; width: 100%; overflow-x:hidden; font-size: smaller">
             <thead>
             <tr>
                 <th>Номер</th>
@@ -60,7 +60,7 @@
                         <ul class="dropdown-menu dropdownPatients">
                             <% for (let i = 0; i < patients.length; i++) { %>
                                 <li><a href="#"
-                                       id_val="<%= patients[i].Patient_ID %>">p - <%= patients[i].Patient_Surname %></a>
+                                       id_val="<%= patients[i].Patient_ID %>"><%= patients[i].Patient_Surname %></a>
                                 </li>
                             <% } %>
                         </ul>

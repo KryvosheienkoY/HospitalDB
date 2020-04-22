@@ -34,9 +34,9 @@ function requestToAddAppointmentDB($row) {
     $.ajax({
         type: 'GET',
         headers: {Authorization: sessionStorage.getItem("token")},
-        url: '/doctor/myappointments',
+        url: '/doctor/my_appointments',
         success: function (response) {
-            console.log("/doctor/myappointments");
+            console.log("/doctor/my_appointments");
             $("body").html(response);
         }
     });

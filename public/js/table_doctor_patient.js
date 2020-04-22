@@ -13,16 +13,38 @@ $(".dropdownPatientsD li a").click(function () {
     let successMsg = "success of "+url;
     console.log("for ajax - ");
     console.log(dat);
-        $.ajax({
-            type: 'GET',
-            headers: {Authorization: sessionStorage.getItem("token")},
-            data:dat,
-            url: url,
-            success: function (response) {
-                //get allergies string, allergies num
-                console.log("successful ajax - " + url);
-                $("#allergiesTd").html(response.allergies);
-                $("#allergiesNumTd").html(response.num);
-            }
-        });
+    let x ={info: dat};
+    console.log(x);
+    $.ajax({
+        type: 'post',
+        headers: {Authorization: sessionStorage.getItem("token")},
+        data: x,
+        url: url,
+        success: function (response) {
+            //get allergies string, allergies num
+            console.log("successful ajax - " + url);
+            $("#allergiesTd").html(response.allergies);
+            $("#allergiesNumTd").html(response.num[0].counter);
+        }
+    });
+
+    // let successMsg = "success of " + url;
+    // sendAjax(url, successMsg, {info: dat});
+
+    // function sendAjax(url, successMsg, data) {
+    //     $.ajax({
+    //         type: 'Post',
+    //         headers: {authorization: sessionStorage.getItem("token")},
+    //         data: data,
+    //         content-type: "application/json; charset=utf-8",
+    //         url: url,
+    //         success: function (response) {
+    //             console.log("successful ajax - " + url);
+    //             $("#allergiesTd").html(response.allergies);
+    //             $("#allergiesNumTd").html(response.num);
+    //         }
+    //
+    //     })
+    // }
+
 });
