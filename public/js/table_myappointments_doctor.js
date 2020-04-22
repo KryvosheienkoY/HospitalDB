@@ -1,6 +1,8 @@
 function addRow(but) {
     console.log("Add row");
     let $row = $(but).parents('tr');
+    console.log("$row");
+    console.log($row);
     let failed = false;
     if (!failed) {
         requestToAddAppointmentDB($row);
@@ -15,11 +17,12 @@ function requestToAddAppointmentDB($row) {
 
     console.log("tdinfo");
     console.log(tdInfo);
+    let med_id =$('#selectedMedicine').attr('id_val');
+    let pat_id =$('#selectedPatient').attr('id_val');
     let data = {
-        Appointment_Date: tdInfo[0], Patient_Surname: tdInfo[1],
-        Diagnosys_Name: tdInfo[2], Diagnosys_StartDate: tdInfo[3], Diagnosys_EndDate: tdInfo[4],
-        Presc_Instruction: tdInfo[5], Medicine_Name: tdInfo[6], Medicine_Type: tdInfo[7],
-        Presc_Required: tdInfo[8], Medical_Form: tdInfo[9], Doctor_ID: ""
+        Appointment_Date: tdInfo[0], Patient_ID: pat_id,
+        Diagnosys_Name: tdInfo[1], Diagnosys_StartDate: tdInfo[2], Diagnosys_EndDate: tdInfo[3],
+        Presc_Instruction: tdInfo[4], Medicine_ID: med_id,Doctor_ID: ""
     };
 
     console.log("for ajax - ");

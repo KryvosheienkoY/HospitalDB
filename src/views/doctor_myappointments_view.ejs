@@ -1,6 +1,11 @@
 <body>
 <script src="js/table_myappointments_doctor.js"></script>
 <!--<link rel="stylesheet" href="styles/admin_tables_styles.css" type="text/css">-->
+<style type="text/css">
+    .dropdown-menu {
+        transform: translate3d(5px, 35px, 0px) !important;
+    }
+</style>
 <%- include('head'); %>
 <%- include('toolbar_doctor_view', {section: 'main'}); %>
 <div class="table-responsive table-body">
@@ -20,9 +25,6 @@
                 <th>Дата вилікування</th>
                 <th>Presc_Instruction</th>
                 <th>Medicine_Name</th>
-                <th>Medicine_Type</th>
-                <th>Presc_Required</th>
-                <th>Medical_Form</th>
                 <th></th>
 
             </tr>
@@ -41,32 +43,57 @@
                     <td><%= appointments[i].Diagnosys_EndDate %></td>
                     <td><%= appointments[i].Presc_Instruction %></td>
                     <td><%= appointments[i].Medicine_Name %></td>
-                    <td><%= appointments[i].Medicine_Type %></td>
-                    <td><%= appointments[i].Presc_Required %></td>
-                    <td><%= appointments[i].Medical_Form %></td>
                     <td></td>
                 </tr>
             <% } %>
 
-            <tr id="addingTr">
+            <tr id="addingAppointmentsTr">
                 <td>Num</td>
-               <td><input required type="date" class="form-control validate"></td>
-                <td> <input class="form-control input-sm"></td>
+                <td><input required type="date" class="form-control validate"></td>
+                <!--<td><input class="form-control input-sm"></td>-->
+                <!--dropdown patients name-->
+                <td>
+                    <div class="btn-group">
+                        <a id_val="53" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"
+                           id="selectedPatient">Пацієнт
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu dropdownPatients">
+                            <% for (let i = 0; i < patients.length; i++) { %>
+                                <li><a href="#"
+                                       id_val="<%= patients[i].Patient_ID %>"><%= patients[i].Patient_Surname %></a>
+                                </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </td>
+
+
+
                 <td></td>
                 <td></td>
                 <td></td>
-            <% for (let i = 6; i < 14; i++) { %>
-                    <td>
-                        <% if(i === 7 || i === 8){ %>
-                            <input required type="date" class="form-control validate">
-                        <% }else { %>
-                            <input class="form-control input-sm">
-                        <% } %>
-                    </td>
-                <% } %>
+                <td><input class="form-control input-sm"></td>
+                <td><input required type="date" class="form-control validate"></td>
+                <td><input required type="date" class="form-control validate"></td>
+                <td><input class="form-control input-sm"></td>
+                <!--dropdown medicine name-->
+                <td>
+                    <div class="btn-group">
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"
+                           id="selectedMedicine">Назва ліків
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu dropdownMedicine">
+                            <% for (let i = 0; i < medicine.length; i++) { %>
+                                <li><a href="#"
+                                       id_val="<%= medicine[i].Medicine_ID %>"><%= medicine[i].Medicine_Name %></a>
+                                </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </td>
                 <td name="buttons">
-                    <button id="addingBt" type="button" class="btn btn-sm btn-default"
-                            onclick="addRow(this);"> &nbsp<i
+                    <button id="addingAppointmentsBt" type="button" class="btn btn-sm btn-default"
+                            onclick="addRow(this);" style="margin-top: -10px;"> &nbsp<i
                                 class="fas fa-plus icon-4x"> </i></button>
                 </td>
             </tr>
@@ -80,6 +107,23 @@
     <% } %>
 </div>
 <script>
-    $('#tableDoctorAppointments').SetEditable("1,2,3,4,5,6,7,8,9,10");
+    $('#tableDoctorAppointments').SetEditable("1,2,3,4,5,6,7");
+    $(".dropdownMedicine li a").click(function () {
+        console.log("dropdown");
+        let selText = $(this).text();
+        let selId = $(this).attr('id_val');
+        console.log(selId + " - selId");
+        $(this).parents('.btn-group').find('.dropdown-toggle').html(selText + ' <span class="caret"></span>');
+        $('#selectedMedicine').attr('id_val', selId);
+    });
+
+    $(".dropdownPatients li a").click(function () {
+        console.log("dropdown");
+        let selText = $(this).text();
+        let selId = $(this).attr('id_val');
+        console.log(selId + " - selId");
+        $(this).parents('.btn-group').find('.dropdown-toggle').html(selText + ' <span class="caret"></span>');
+        $('#selectedPatient').attr('id_val', selId);
+    });
 </script>
 </body>
