@@ -20,7 +20,8 @@ $(".dropdownPatients li a").click(function () {
             success: function (response) {
                 //get allergies string, allergies num
                 console.log("successful ajax - " + url);
-                $("#allergiesTd").
+                $("#allergiesTd").html(allergies);
+                $("#allergiesNumTd").html(allergies.num);
             }
         });
 });
