@@ -18,8 +18,8 @@
                 <a class="nav-link" href="/doctor/my_appointments" id="D_myappointmentsID">Мої прийоми</a>
 
             </li>
-            <li class="nav-item <%= section === 'my_patients' ? '' : 'active' %>">
-                <a class="nav-link" href="/doctor/my_patients" id="D_my_patientsID">Мої пацієнти</a>
+            <li class="nav-item <%= section === 'patients' ? '' : 'active' %>">
+                <a class="nav-link" href="/doctor/patients" id="D_patientsID">Пацієнти</a>
             </li>
         </ul>
 
@@ -62,15 +62,15 @@
             });
         });
 
-        $('#D_mypatientsID').on('click', function (e) {
+        $('#D_patientsID').on('click', function (e) {
             e.preventDefault();
             console.log("token -" + sessionStorage.getItem('token'));
             $.ajax({
                 type: 'GET',
                 headers: {Authorization: sessionStorage.getItem("token")},
-                url: '/doctor/my_patients',
+                url: '/doctor/patients',
                 success: function (response) {
-                    console.log("success of /doctor/my_patients/");
+                    console.log("success of /doctor/patients/");
                     $("body").html(response);
                 }
             });

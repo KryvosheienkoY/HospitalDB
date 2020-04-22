@@ -6,6 +6,7 @@ app.set('views', './src/views');
 app.use('/', express.static(__dirname + '/../public'));
 app.use('/patient', express.static(__dirname + '/../public'));
 app.use('/doctor', express.static(__dirname + '/../public'));
+//app.set('views', 'C:/Users/USER/WebstormProjects/HospitalDB/src/views');
 app.listen(8080);
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
@@ -67,21 +68,20 @@ app.get("/doctor/my_profile", function (req, res) {
             if (err) console.log(err);
             console.log(result[0]);
             substringDate(result);
-            let sql1 = "SELECT COUNT(DISTINCT Ticket_Num) FROM appointment WHERE Doctor_ID=? GROUP BY Doctor_ID";
+            let sql1 = "SELECT COUNT(DISTINCT Ticket_Num) AS tot FROM appointment WHERE Doctor_ID=? GROUP BY Doctor_ID";
             con.query(sql1, id, function (er, appointments) {
                 let sql2 = "SELECT * FROM workday WHERE Doctor_ID=?";
                 con.query(sql2, id, function (e, workdays) {
-                    let sql3 = "SELECT Department_Name, department.Department_ID, Doctor_ID, Doctor_Surname,Doctor_Firstname," +
-                        " Doctor_Patronymic, Department_Head, Doctor_PhoneN, Doctor_eAddress, Doctor_Specialization, Scientific_Degree" +
-                        "FROM doctor INNER JOIN department ON doctor.Department_ID=department.Department_ID WHERE Doctor_ID= ?)";
-
+                    let sql3 = "SELECT Department_Name, department.Department_ID, Doctor_ID, Doctor_Surname,Doctor_Firstname,Doctor_Patronymic, Department_Head, Doctor_PhoneN, Doctor_eAddress, Doctor_Specialization, Scientific_Degree FROM doctor INNER JOIN department ON doctor.Department_ID=department.Department_ID WHERE Doctor_ID=?";
                     con.query(sql3, id, function (error, docres) {
                         console.log("rendering doctor_myprofile_view");
                         console.log(docres);
                         console.log("id - "+id);
+                        console.log("appointments - ");
+                        console.log(appointments);
                         res.render("doctor_myprofile_view", {
                             doctor: docres[0],
-                            appointments: appointments,
+                            appointments: appointments[0].tot,
                             schedule: workdays
                         });
                     });
@@ -91,6 +91,58 @@ app.get("/doctor/my_profile", function (req, res) {
     }
 });
 
+app.get("/doctor/my_appointments", function (req, res) {
+    console.log("doctor/myappointments get");
+    if (req.headers && req.headers.authorization) {
+        let auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        console.log("id"+id);
+
+        let sql1 = "SELECT * FROM appointment WHERE Doctor_ID=?";
+        con.query(sql1, id, function (er, appointments) {
+            let sql2 = "SELECT Patient_ID, Patient_Surname, Patient_Firstname Patient_Patronymic,Patient_Phone_N FROM patient WHERE Patient_ID IN (SELECT Patient_ID FROM appointment WHERE Doctor_ID=?)";
+            con.query(sql2, id, function (e, patients) {
+                console.log("rendering doctor_myprofile_view");
+                res.render("doctor_myappointments_view", {
+                    appointments: appointments,
+                    patients: patients
+                });
+
+            });
+        });
+    }
+});
+
+app.get('/doctor/allergy_Patients', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        let auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if (role != 2) {
+            res.json({response: "Fail. No rights to delete"});
+        }
+        let sql2 = "SELECT Allergy_Name FROM allergy WHERE Allergy_ID IN(SELECT Allergy_ID FROM patientallergy WHERE Patient_ID=?)";
+        con.query(sql2, req.body.patient_id, function (e, patients) {
+        });
+    }
+});
+
+app.post('/doctor/add/appointment', function (req, res) {
+    if (req.headers && req.headers.authorization) {
+        let auth = req.headers.authorization;
+        let {role, id} = jwt.verify(auth, Secret);
+        if (role != 2) {
+            res.json({response: "Fail. No rights to delete"});
+        }
+        else {
+            req.body.appointment.Doctor_ID = id;
+            let sql = "INSERT INTO appointment SET ?";
+            con.query(sql, req.body.appointment, function (err, result) {
+
+                res.json({res: "success"});
+            });
+        }
+    }
+});
 
 app.get('/our_departments', function (req, res) {
     con.query("SELECT * FROM `department`", function (err, result) {
@@ -257,6 +309,7 @@ function substringDate(result) {
         result[i].Diagnosys_EndDate = ("" + result[i].Diagnosys_EndDate).substring(0, 15);
         result[i].Workday_StartTime = ("" + result[i].Diagnosys_EndDate).substring(0, 15);
         result[i].Workday_EndTime = ("" + result[i].Diagnosys_EndDate).substring(0, 15);
+        result[i].Appointment_Date = ("" + result[i].Appointment_Date).substring(0, 15);
     }
 }
 

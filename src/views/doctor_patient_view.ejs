@@ -1,0 +1,32 @@
+<body>
+<%- include('head'); %>
+<%- include('toolbar_doctor_view', {section: 'main'}); %>
+<% if(patients.length > 0){ %>
+    <table id="tableDoctorPatients" class="table table-striped table-responsive-md btn-table"
+           style="max-width: 100%; margin: 15px;width: auto;">
+        <thead>
+        <tr>
+            <th>Прізвище</th>
+            <th>Ім'я</th>
+            <th>По-батькові</th>
+            <th>Номер телефону</th>
+            <th>Алергії</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for (let i = 0; i < patients.length; i++) { %>
+            <tr>
+                <td><%= patients[i].Patient_Surname %></td>
+                <td><%= patients[i].Patient_FirstName %></td>
+                <td><%= patients[i].Patient_Patronymic %></td>
+                <td><%= patients[i].Patient_PhoneN %></td>
+                <td><%= patients[i].allergies %></td>
+            </tr>
+        <% } %>
+        </tbody>
+    </table>
+<% } else{ %>
+    <p style="margin-top: 10%;margin-left: 40%;">Ваша історія прийомів пуста.</p>
+<% } %>
+
+</body>

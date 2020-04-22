@@ -40,6 +40,7 @@
         <tr>
             <td>Зам відділу</td>
             <td><%= doctor.Department_Head %></td>
+            <td></td>
         </tr>
         <tr>
             <td>Номер телефону</td>
@@ -72,44 +73,60 @@
         <tr>
             <td>Спеціалізація</td>
             <td><%= doctor.Doctor_Specialization %></td>
+            <td></td>
         </tr>
         <tr>
             <td>Ступінь</td>
-            <td ><%= doctor.Scientific_Degree %></td>
+            <td><%= doctor.Scientific_Degree %></td>
+            <td></td>
         </tr>
         <tr>
             <td>Кількість прийомів</td>
-            <td ><%= appointments%></td>
+            <td><%= appointments %></td>
+            <td></td>
         </tr>
-        
+
         </tbody>
     </table>
 
-        <table id="tableSchedule" style="width: 60%; margin-left: 15%"
-               class="table table-striped table-responsive-md btn-table"
-               style="width: 70%; margin-left: 15%">
-            <thead>
+    <table id="tableSchedule" style="width: 60%; margin-left: 15%"
+           class="table table-striped table-responsive-md btn-table"
+           style="width: 70%; margin-left: 15%">
+        <thead>
+        <tr>
+            <th>День тижня</th>
+            <th>Початок роботи</th>
+            <th>Кінець роботи</th>
+            <th>Кабінет</th>
+            <th>Інформація</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for (let i = 0; i < schedule.length; i++) { %>
             <tr>
-                <th>День тижня</th>
-                <th>Початок роботи</th>
-                <th>Кінець роботи</th>
-                <th>Кабінет</th>
-                <th>Інформація</th>
+                <% if(schedule[i].Weekday_Num === 1){ %>
+                    <td>Понеділок</td>
+                <% }else if (schedule[i].Weekday_Num === 2){ %>
+                    <td>Вівторок</td>
+                <% }else if (schedule[i].Weekday_Num === 3){ %>
+                    <td>Середа</td>
+                <% }else if (schedule[i].Weekday_Num === 4){ %>
+                    <td>Четвер</td>
+                <% }else if (schedule[i].Weekday_Num === 5){ %>
+                    <td>П'ятниця</td>
+                <% }else if (schedule[i].Weekday_Num === 6){ %>
+                    <td>Субота</td>
+                <% }else{ %>
+                    <td>Неділя</td>
+                <% } %>
+                <td><%= schedule[i].Workday_StartTime %></td>
+                <td><%= schedule[i].Workday_EndTime %></td>
+                <td><%= schedule[i].Workday_Room %></td>
+                <td><%= schedule[i].Workday_Info %></td>
             </tr>
-            </thead>
-            <tbody>
-            <% for (let i = 0; i < schedule.length; i++) { %>
-                <tr>
-                    <td><%= schedule[i].Weekday_Num %></td>
-                    <td><%= schedule[i].Workday_StartTime %></td>
-                    <td><%= schedule[i].Workday_EndTime %></td>
-                    <td><%= schedule[i].Workday_Room %></td>
-                    <td><%= schedule[i].Workday_Info %></td>
-                </tr>
-            <% } %>
-            </tbody>
-        </table>
-
+        <% } %>
+        </tbody>
+    </table>
 
 
 </div>
