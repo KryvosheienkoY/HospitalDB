@@ -25,7 +25,7 @@
 
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item" id="loginAid">
-                <a class="nav-link trigger-btn" href="#D_Logout" data-toggle="modal"
+                <a class="nav-link trigger-btn" href="/" data-toggle="modal" id="logoutIdD"
                    data-target="#D_modalLoginForm">Logout</a>
             </li>
         </ul>
@@ -75,6 +75,20 @@
                 }
             });
         });
+    });
+    $('#logoutIdD').on('click', function (e) {
+            e.preventDefault();
+            //  console.log("token -" + sessionStorage.getItem('token'));
+            $.ajax({
+                type: 'GET',
+                // headers: {Authorization: sessionStorage.getItem("token")},
+                url: 'http://localhost:8080/',
+                success: function (response) {
+                    console.log("success of //");
+                    console.log(response);
+                    $("body").html(response);
+                }
+            });
     });
 
 </script>

@@ -19,9 +19,9 @@ function applyAllergies() {
         type: 'post',
         headers: {Authorization: sessionStorage.getItem("token")},
         data: {allergies: patient_allergies},
-        url: '/patient/allergies',
+        url: '/patient_allergies',
         success: function (response) {
-            console.log("success of /patient/my_profile/");
+            console.log("success of /patient_my_profile/");
 
         }
     });

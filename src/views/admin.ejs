@@ -27,15 +27,15 @@
 <script>
     function sendAjaxPatientTable() {
         let url = '/admin/patient_table';
-        sendAjax(url);
+        sendAjaxA(url);
     }
 
     function sendAjaxDoctorTable() {
         let url = '/admin/doctor_table';
-        sendAjax(url);
+        sendAjaxA(url);
     }
 
-    function sendAjax(url) {
+    function sendAjaxA(url) {
         $.ajax({
             type: 'GET',
             headers: {Authorization: sessionStorage.getItem("token")},

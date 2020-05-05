@@ -12,5 +12,27 @@
         </div>
         <% } %>
     </div>
+    <br>
+    <h2>Лікарі, що працюють кожен день</h2>
+    <div class="table-responsive table-body">
+        <table id="table1" style="width: 100%; overflow-x:hidden; font-size: smaller"
+               class="table table-striped table-responsive-sm btn-table"
+               style="width: 70%; margin-left: 15%">
+            <thead>
+            <tr>
+                <th>Прізвище</th>
+                <th>Ім'я</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (let i = 0; i < doctors.length; i++) { %>
+                <tr id="<%= i %>">
+                    <td><%= doctors[i].Doctor_Surname %></td>
+                    <td><%= doctors[i].Doctor_Firstname %></td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
 </div>
 <script src="js/our_departments.js"></script>

@@ -4,8 +4,9 @@ app.use(express.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.set('views', './src/views');
 app.use('/', express.static(__dirname + '/../public'));
-app.use('/patient', express.static(__dirname + '/../public'));
+//app.use('/patient', express.static(__dirname + '/../public'));
 app.use('/doctor', express.static(__dirname + '/../public'));
+app.use('/admin', express.static(__dirname + '/../public'));
 //app.set('views', 'C:/Users/USER/WebstormProjects/HospitalDB/src/views');
 app.listen(8080);
 const bodyParser = require('body-parser');
@@ -220,27 +221,42 @@ app.post('/doctor/add/appointment', function (req, res) {
     }
 });
 
+
 app.get('/our_departments', function (req, res) {
-    con.query("SELECT * FROM `department`", function (err, result) {
-        res.render('our_departments_unlogged_view', {
-            departmentsAr: result
+    con.query("SELECT * FROM department", function (err, result) {
+        let sql = "SELECT Doctor_ID, Doctor_Surname, Doctor_Firstname From doctor Where Doctor_ID IN (SELECT X.Doctor_ID FROM workday X WHERE NOT EXISTS ( SELECT Doctor_ID FROM workday WHERE Weekday_Num NOT IN ( SELECT Weekday_Num FROM workday WHERE Doctor_ID=X.Doctor_ID)))";
+        con.query(sql, function (err, resul) {
+
+            res.render('our_departments_unlogged_view', {
+                departmentsAr: result,
+                doctors: resul
+            });
         });
     });
-});
+})
 
+app.get('/patient_our_departments', function (req, res) {
+    con.query("SELECT * FROM department", function (err, result) {
+        let sql = "SELECT Doctor_ID, Doctor_Surname, Doctor_Firstname From doctor Where Doctor_ID IN (SELECT X.Doctor_ID FROM workday X WHERE NOT EXISTS ( SELECT Doctor_ID FROM workday WHERE Weekday_Num NOT IN ( SELECT Weekday_Num FROM workday WHERE Doctor_ID=X.Doctor_ID)))";
+        con.query(sql, function (err, resul) {
 
-app.get('/patient/our_departments', function (req, res) {
-    con.query("SELECT * FROM `department`", function (err, result) {
-        res.render('our_departments_patient_view', {
-            departmentsAr: result
+            res.render('our_departments_patient_view', {
+                departmentsAr: result,
+                doctors: resul
+            });
         });
     });
 });
 
 app.get('/doctor/our_departments', function (req, res) {
-    con.query("SELECT * FROM `department`", function (err, result) {
-        res.render('our_departments_doctor_view', {
-            departmentsAr: result
+    con.query("SELECT * FROM department", function (err, result) {
+        let sql = "SELECT Doctor_ID, Doctor_Surname, Doctor_Firstname From doctor Where Doctor_ID IN (SELECT X.Doctor_ID FROM workday X WHERE NOT EXISTS ( SELECT Doctor_ID FROM workday WHERE Weekday_Num NOT IN ( SELECT Weekday_Num FROM workday WHERE Doctor_ID=X.Doctor_ID)))";
+        con.query(sql, function (err, resul) {
+
+            res.render('our_departments_doctor_view', {
+                departmentsAr: result,
+                doctors: resul
+            });
         });
     });
 });
@@ -389,7 +405,7 @@ function substringDate(result) {
     }
 }
 
-app.get("/patient/my_profile", function (req, res) {
+app.get("/patient_my_profile", function (req, res) {
     if (req.headers && req.headers.authorization) {
         let auth = req.headers.authorization;
         let {role, id} = jwt.verify(auth, Secret);
@@ -425,7 +441,7 @@ app.get("/patient/my_profile", function (req, res) {
     }
 });
 
-app.post('/patient/allergies', function (req, res) {
+app.post('/patient_allergies', function (req, res) {
     if (req.headers && req.headers.authorization) {
         let auth = req.headers.authorization;
         let {role, id} = jwt.verify(auth, Secret);
@@ -474,7 +490,7 @@ app.post('/patient/allergies', function (req, res) {
     }
 });
 
-app.get("/patient/my_appointments", function (req, res) {
+app.get("/patient_my_appointments", function (req, res) {
     if (req.headers && req.headers.authorization) {
         let auth = req.headers.authorization;
         let {role, id} = jwt.verify(auth, Secret);
@@ -498,7 +514,7 @@ app.get("/patient/my_appointments", function (req, res) {
     }
 });
 
-app.post("/patient/edit", function (req, res) {
+app.post("/patient_edit", function (req, res) {
     if (req.headers && req.headers.authorization) {
         let auth = req.headers.authorization;
         let {role, id} = jwt.verify(auth, Secret);
@@ -515,6 +531,7 @@ app.post("/patient/edit", function (req, res) {
 });
 
 app.post('/admin/add/patient', function (req, res) {
+    console.log("add by admin");
     if (req.headers && req.headers.authorization) {
         let auth = req.headers.authorization;
         let {role, id} = jwt.verify(auth, Secret);

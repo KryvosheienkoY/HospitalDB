@@ -8,15 +8,6 @@ $.fn.SetEditable = function (cols, options) {
     let defaults = {
         columnsEd: cols,         //Index to editable columns. If null all td editables. Ex.: "1,2,3,4,5"
         $addButton: null,        //Jquery object of "Add" button
-        // onEdit: function () {
-        //     console.log("edited")
-        // },   //Called after edition
-        // onBeforeDelete: function () {
-        // }, //Called before deletion
-        // onDelete: function () {
-        // }, //Called after deletion
-        // onAdd: function () {
-        // }     //Called when added a new row
     };
     params = $.extend(defaults, options);
 
@@ -46,6 +37,9 @@ function IterarCamposEdit($cols, tarea) {
     });
 
     function EsEditable(idx) {
+        console.log("EsEditable - colsedi - ");
+        console.log(colsEdi);
+
         //Indica si la columna pasada está configurada para ser editable
         if (colsEdi == null) {  //no se definió
             return true;  //todas son editable

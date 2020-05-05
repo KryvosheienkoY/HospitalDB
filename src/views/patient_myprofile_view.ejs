@@ -7,7 +7,7 @@
 <%- include('head'); %>
 <%- include('toolbar_patient_view', {section: 'main'}); %>
 <div style="margin: 25px">
-    <table class="table table-striped table-responsive-md btn-table" style="width: 60%; margin-left: 15%">
+    <table class="table table-striped table-responsive-md btn-table" id="t1" style="width: 60%; margin-left: 15%">
         <thead>
         <tr>
             <th colspan="3">Моя інформація</th>
@@ -206,9 +206,10 @@
         </tr>
         </tfoot>
     </table>
+    <script>
+        $('#t1').SetEditable("2");
+        console.log("ok");
+    </script>
 </div>
-<script>
-    $('table').SetEditable("1");
-</script>
 </body>
 <!--</html>-->

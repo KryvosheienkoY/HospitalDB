@@ -28,23 +28,4 @@ $(".dropdownPatientsD li a").click(function () {
         }
     });
 
-    // let successMsg = "success of " + url;
-    // sendAjax(url, successMsg, {info: dat});
-
-    // function sendAjax(url, successMsg, data) {
-    //     $.ajax({
-    //         type: 'Post',
-    //         headers: {authorization: sessionStorage.getItem("token")},
-    //         data: data,
-    //         content-type: "application/json; charset=utf-8",
-    //         url: url,
-    //         success: function (response) {
-    //             console.log("successful ajax - " + url);
-    //             $("#allergiesTd").html(response.allergies);
-    //             $("#allergiesNumTd").html(response.num);
-    //         }
-    //
-    //     })
-    // }
-
 });

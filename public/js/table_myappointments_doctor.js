@@ -21,8 +21,8 @@ function requestToAddAppointmentDB($row) {
     let pat_id =$('#selectedPatient').attr('id_val');
     let data = {
         Appointment_Date: tdInfo[0], Patient_ID: pat_id,
-        Diagnosys_Name: tdInfo[1], Diagnosys_StartDate: tdInfo[2], Diagnosys_EndDate: tdInfo[3],
-        Presc_Instruction: tdInfo[4], Medicine_ID: med_id,Doctor_ID: ""
+        Diagnosys_Name: "", Diagnosys_StartDate: "", Diagnosys_EndDate: "",
+        Presc_Instruction: "", Medicine_ID: "",Doctor_ID: ""
     };
 
     console.log("for ajax - ");

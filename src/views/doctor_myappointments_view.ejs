@@ -20,13 +20,6 @@
                 <th>Прізвище</th>
                 <th>Ім'я</th>
                 <th>По-батькові</th>
-                <th>Діагноз</th>
-                <th>Дата встановлення</th>
-                <th>Дата вилікування</th>
-                <th>Presc_Instruction</th>
-                <th>Medicine_Name</th>
-                <th></th>
-
             </tr>
             </thead>
             <tbody>
@@ -38,12 +31,6 @@
                     <td><%= appointments[i].Patient_Surname %></td>
                     <td><%= appointments[i].Patient_Firstname %></td>
                     <td><%= appointments[i].Patient_Patronymic %></td>
-                    <td><%= appointments[i].Diagnosys_Name %></td>
-                    <td><%= appointments[i].Diagnosys_StartDate %></td>
-                    <td><%= appointments[i].Diagnosys_EndDate %></td>
-                    <td><%= appointments[i].Presc_Instruction %></td>
-                    <td><%= appointments[i].Medicine_Name %></td>
-                    <td></td>
                 </tr>
             <% } %>
 
@@ -67,30 +54,23 @@
                     </div>
                 </td>
 
-
-
                 <td></td>
                 <td></td>
-                <td></td>
-                <td><input class="form-control input-sm"></td>
-                <td><input required type="date" class="form-control validate"></td>
-                <td><input required type="date" class="form-control validate"></td>
-                <td><input class="form-control input-sm"></td>
                 <!--dropdown medicine name-->
-                <td>
-                    <div class="btn-group">
-                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"
-                           id="selectedMedicine">Назва ліків
-                            <span class="caret"></span></a>
-                        <ul class="dropdown-menu dropdownMedicine">
-                            <% for (let i = 0; i < medicine.length; i++) { %>
-                                <li><a href="#s"
-                                       id_val="<%= medicine[i].Medicine_ID %>"><%= medicine[i].Medicine_Name %></a>
-                                </li>
-                            <% } %>
-                        </ul>
-                    </div>
-                </td>
+                <!--<td>-->
+                    <!--<div class="btn-group">-->
+                        <!--<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"-->
+                           <!--id="selectedMedicine">Назва ліків-->
+                            <!--<span class="caret"></span></a>-->
+                        <!--<ul class="dropdown-menu dropdownMedicine">-->
+                            <!--<% for (let i = 0; i < medicine.length; i++) { %>-->
+                                <!--<li><a href="#s"-->
+                                       <!--id_val="<%= medicine[i].Medicine_ID %>"><%= medicine[i].Medicine_Name %></a>-->
+                                <!--</li>-->
+                            <!--<% } %>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                <!--</td>-->
                 <td name="buttons">
                     <button id="addingAppointmentsBt" type="button" class="btn btn-sm btn-default"
                             onclick="addRow(this);" style="margin-top: -10px;"> &nbsp<i
